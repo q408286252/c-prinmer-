@@ -4,14 +4,21 @@ using namespace std;
 int i = 42;
 int main()
 {
-    //2.12
-   int i, &ri = i;
-   i = 5; ri = 10;
-    cout << i << " " << ri << endl;
+    //2.20
+    int i = 42;
+
+    cout << p << endl;
     return 0;
 }
 
 /*
+    //2.20
+    int i = 42;
+    int *p = &i;
+    *p = *p * *p;
+    cout << i << endl;
+    return 0;
+
     //2.9
     int i;
     std::cin >> i ;
