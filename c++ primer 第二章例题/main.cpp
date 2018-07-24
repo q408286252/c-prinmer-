@@ -1,15 +1,59 @@
 #include <iostream>
+#include <string>
+#include "Sales_data.h"
 
 using namespace std;
 int main()
 {
-    //2.30
 
-    cout << " " << endl;
-    return 0;
 }
 
-/*
+/*  //2.6.2
+        Sales_data data1, data2;
+    double price = 0;
+    std::cin >> data1.bookNo >> data1.units_sold >> price;
+    data1.revenue = data1.units_sold * price;
+    std:;cin >> data2.bookNo >> data2.units_sold >> price;
+    data2.revenue = data2.units_sold * price;
+    if ( data1.bookNo == data2.bookNo){
+        std::cout << data1.revenue + data2.revenue << endl;
+    } else {
+        std::cout << "书的ID不一致" << endl;
+    }
+
+    //2.40
+    struct lala{
+        std::string balabala;
+        int bana = 0;
+        char boom = "1";
+    };
+
+    //2.38
+    int a =3, &b = a;
+    const int c = a;
+    decltype(c) e = c;  //和 auto e = c; 不一样
+    e= 5;
+    cout << a << endl;
+    return 0;
+
+    //2.36
+    int a = 3, b = 4;
+    decltype(a) c = a;
+    decltype((b)) d = a;
+    ++c;
+    ++d;
+    cout << a<<b<< c<<d << endl;
+
+    //2.33
+    int i = 0, &r = i;
+    const int ci = i, &cr = ci;
+    auto a = r;
+    auto b = ci;
+    auto c = cr;
+    auto d = &i;
+    auto e = &ci;
+    auto &g = ci;
+
     //2.31
     int i = 0;              //i变量 v2常量 v1变量
     const int v2 = 0;       //p1指针指向变量  p2指针指向常量 p3定值指针指向定值i=3
