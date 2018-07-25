@@ -5,14 +5,110 @@
 
 #include "Sales_data.h" //加载的文件
 
-using namespace std;
+using namespace std;    //所有命名空间都加载到默认关键字里
 
 int main()
-{
+{   //3.20.2 十万位以内  没学string字符int类型转换
+    int int1;
+    vector<int> list1;
+    while (cin >> int1)
+        if (int1 < 1000000){
+            list1.push_back(int1/100000);
+            int1 = int1 - int1/100000*100000;
+            list1.push_back(int1/10000);
+            int1 = int1 - int1/10000*10000;
+            list1.push_back(int1/1000);
+            int1 = int1 - int1/1000*1000;
+            list1.push_back(int1/100);
+            int1 = int1 - int1/100*100;
+            list1.push_back(int1/10);
+            int1 = int1 - int1/10*10;
+            list1.push_back(int1/1);
+        }
+    for (decltype(list1.size()) i =0; i != list1.size()/2; ++i){
+        cout << list1[i] + list1[list1.size()-1] << endl;
+    }
     return 0;
 }
 
 /*
+ //3.20.1 万位以内  没学string字符int类型转换
+    int int1;
+    vector<int> list1;
+    while (cin >> int1)
+        if (int1 < 100000){
+            list1.push_back(int1/10000);
+            int1 = int1 - int1/10000*10000;
+            list1.push_back(int1/1000);
+            int1 = int1 - int1/1000*1000;
+            list1.push_back(int1/100);
+            int1 = int1 - int1/100*100;
+            list1.push_back(int1/10);
+            int1 = int1 - int1/10*10;
+            list1.push_back(int1/1);
+        }
+    for (decltype(list1.size()) i =0; i != list1.size()-1; ++i){
+        cout << list1[i] + list1[i+1] << endl;
+    }
+    return 0;
+
+//3.19
+    vector<int> i(10,42);
+    vector<int> i1{42,42,42,42,42,42,42,42,42,42};
+    vector<int> i2;
+    for (int i = 0; i != 10; ++i)
+        i2.push_back(42);
+    //第一行最方便 因为写的代码最短简洁
+    return 0;
+
+//3.18
+    //不合法
+    vector<int> ivec;
+    ivec.push_back(42);
+    return 0;
+
+//3.17
+    vector<char> v;
+    string in;
+    string str = "qwertyuiopasdfghjklzxcvbnm";
+    string str1 = "QWERTYUIOPASDFGHJKLZXCVBNM";
+    while (cin >> in)
+        for (decltype(in.size()) la = 0; la != in.size(); ++la)
+            v.push_back(in[la]);
+    for (auto &i : v){
+        for (decltype(str.size()) la = 0; la != str.size(); ++la ){
+            if (str[la] == i)
+               i  = str1[la];
+        }
+    }
+    for (auto i:v)
+        cout << i << endl;
+    return 0;
+
+ //3.16
+    vector<int> v{1,2,3,4,5,6,7,8,9};
+    for (auto &i : v)
+        cout << i << endl;
+    return 0;
+
+//3.15
+    vector<string> v2;
+    string i;
+    while (cin >> i)
+        v2.push_back(i);
+
+    cout << v2[1] << endl;
+    return 0;
+
+ //3.14
+    vector<int> v2;
+    int i;
+    while (cin >> i)
+        v2.push_back(i);
+
+    cout << v2[1] << endl;
+    return 0;
+
 //3.13
     1. 0个空
     2.10个'0'
