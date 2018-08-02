@@ -8,7 +8,35 @@
 using namespace std;    //所有命名空间都加载到默认关键字里
 
 int main()
-{   //3.20.2 十万位以内  没学string字符int类型转换
+{   //3.23
+    vector<int> intlist = {1,2,3,4,5,6,7,8,9,10};
+    for (auto i = intlist.begin(); i != intlist.end() ; ++i){
+        *i = *i * 2;
+        cout << *i << endl;
+    }
+}
+
+/*
+//3.23
+    vector<int> intlist = {1,2,3,4,5,6,7,8,9,10};
+    for (auto i = intlist.begin(); i != intlist.end() ; ++i){
+        *i = *i * 2;
+        cout << *i << endl;
+    }
+
+//3.22
+    string str = "asdfgh";
+    for (auto i = str.begin(); i != str.end() ; ++i)
+        *i = toupper(*i);
+    cout << str << endl;
+
+//3.21
+    vector<int> v{1,2,3,4,5,6,7,8,9};
+    for (auto i = v.cbegin(); i != v.cend(); ++i)
+        cout << *i << endl;
+    return 0;
+
+//3.20.2 十万位以内  没学string字符int类型转换
     int int1;
     vector<int> list1;
     while (cin >> int1)
@@ -29,9 +57,7 @@ int main()
         cout << list1[i] + list1[list1.size()-1] << endl;
     }
     return 0;
-}
 
-/*
  //3.20.1 万位以内  没学string字符int类型转换
     int int1;
     vector<int> list1;
@@ -206,7 +232,7 @@ getline会把每行'/n'的内容当做一个整体给变量
         cout << a1 << endl;
     return 0;
 
-//3.1
+//3.1.4
 #include <iostream>
 using namespace std;
 int main()
@@ -218,7 +244,7 @@ int main()
     return 0;
 }
 
-
+//3.1.3
 #include <iostream>
 using namespace std;
 int main()
@@ -229,7 +255,7 @@ int main()
     return 0;
 }
 
-
+//3.1.2
 #include <iostream>
 using namespace std;
 int main()
@@ -240,6 +266,7 @@ int main()
     return 0;
 }
 
+//3.1.1
 #include <iostream>
 #include "Sales_data.h"
 using namespace std;
