@@ -8,15 +8,84 @@
 using namespace std;    //所有命名空间都加载到默认关键字里
 
 int main()
-{   //3.23
-    vector<int> intlist = {1,2,3,4,5,6,7,8,9,10};
-    for (auto i = intlist.begin(); i != intlist.end() ; ++i){
-        *i = *i * 2;
-        cout << *i << endl;
-    }
+{
+
 }
 
+
+
+
 /*
+ //3.29
+    //优点:不可修改数量 防止错误的添加 删除
+    //缺点不可修改数量 如果需要修改时候无法修改且 不能赋值和拷贝
+
+//3.28
+    //答:元素值为ia的元素值为0. ia2元素值是无序的数值, as和as2为空白符号
+
+//3.27
+    int txt_size = 2;
+    unsigned buf_size = 1024;
+    int ia[buf_size];           //错误  保存的是2048个数组
+    int ib[4*7-14];             //正确
+    int ic[txt_size] = {0,1};    //错误
+    char st[11] = "fundamental";    //错误字符串包括空白符总共12个
+
+//3.26
+    因为 beg +end 的迭代器位置超了 是不存在的无法计算.
+
+//3.25
+    vector<unsigned> scores(11,0);
+    unsigned grade;
+    while (cin >> grade){
+        if (grade <= 100)
+            ++*(scores.begin()+ (grade/10));
+    cout << scores[0] << endl;
+    }
+
+//3.24.2 十万位以内  没学string字符int类型转换
+    int int1;
+    vector<int> list1;
+    while (cin >> int1)
+        if (int1 < 1000000){
+            list1.push_back(int1/100000);
+            int1 = int1 - int1/100000*100000;
+            list1.push_back(int1/10000);
+            int1 = int1 - int1/10000*10000;
+            list1.push_back(int1/1000);
+            int1 = int1 - int1/1000*1000;
+            list1.push_back(int1/100);
+            int1 = int1 - int1/100*100;
+            list1.push_back(int1/10);
+            int1 = int1 - int1/10*10;
+            list1.push_back(int1/1);
+        }
+
+    for (auto beg = list1.begin(), ed = list1.end(); beg != ed;  ++beg,--ed){
+        cout << *beg + *(ed-1) << endl;
+    }
+    return 0;
+
+ //3.24.1 万位以内  没学string字符int类型转换
+    int int1;
+    vector<int> list1;
+    while (cin >> int1)
+        if (int1 < 100000){
+            list1.push_back(int1/10000);
+            int1 = int1 - int1/10000*10000;
+            list1.push_back(int1/1000);
+            int1 = int1 - int1/1000*1000;
+            list1.push_back(int1/100);
+            int1 = int1 - int1/100*100;
+            list1.push_back(int1/10);
+            int1 = int1 - int1/10*10;
+            list1.push_back(int1/1);
+        }
+    for (auto beg = list1.begin(), ed = list1.end(); beg +1 != ed;  ++beg){
+        cout << *beg + *(beg + 1) << endl;
+    }
+    return 0;
+
 //3.23
     vector<int> intlist = {1,2,3,4,5,6,7,8,9,10};
     for (auto i = intlist.begin(); i != intlist.end() ; ++i){
