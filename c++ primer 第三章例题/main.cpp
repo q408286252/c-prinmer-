@@ -2,30 +2,66 @@
 #include <string>   //字符串文件
 #include <cctype>   //包含单个字母数字判断函数   就是isalnum()这类判断数字还是标点字符来着
 #include <vector>   //容纳对象的容器 俗称列表
+#include <cstring>  //提供C语言标准库的一些函数
 
-#include "Sales_data.h" //加载的文件
+#include "Sales_data.h" //加载本地制作的文件
 
-using namespace std;    //所有命名空间都加载到默认关键字里
+using namespace std;    //所有命名空间都加载到默认关键字里 个人懒这个不是特别推荐
 
 int main()
 {
-    //3.36.1
-    int is[] = {1,2,3}, is2[] = {1,2,3};
-    auto n = end(is) - begin(is), n2 = end(is2) - begin(is2);
-    for (int *p = begin(is), *e = end(is), *p2 = begin(is2), *e2 = end(is2);
-        p != e && p2 != e2; ++p,++p2){
-        --n;
-        --n2;
-        }
+    //3.42
 
-    if (n == 0 && n2 == 0)
-            cout << "两数组数值都相等" << endl;
 }
 
 
 
-
 /*
+    //3.42
+    vector<int> int_vec = {0,1,2,3,4,5};
+    auto ls = int_vec.size();
+    int inta[ls], ii = 0;
+    for (i : int_vec){
+        inta[ii] = i;
+        ++ii;
+    }
+    cout << inta[4] << endl;
+
+
+    //3.41
+    int inta[]= {0,1,2,3,4,5};
+    vector<int> int_vec(inta, inta+6 );
+    //或 vector<int> int_vec(begin(inta), end(inta) );
+    cout << int_vec[5] << endl;
+
+    //3.40
+    char ca[] = "lalafei" ,ca2[] = "lalana";
+    char ca4[] = "1234567123456";
+    strcpy(ca4,ca);
+    strcat(ca4,ca2);
+    cout << ca4 << endl;
+
+    //3.39
+    string str1 = "lalafei", str2 = "lalanaaaa";
+    if (str1 < str2)
+        cout << "str1小于str2" << endl;
+
+    const char ca1[] = "lalafei", ca2[] = "lalanaaaa";
+    if (strcmp(ca1,ca2) < 0)
+        cout << "ca1 小于ca2" << endl;
+
+    //3.38
+    //因为两个指针相加得到的不是两段字符串合并的结果. 只不过得到了一个新的错误地址而已
+
+    //3.37
+    const char ca[] = {'h', 'e', 'l', 'l', 'o'};
+    const char *cp = ca;
+    while (*cp){
+        cout << *cp << endl;
+        ++cp;
+    };
+    //输出结果是 h /n e /n l /n l /n o /n
+
     //3.36.2
     vector<int> is = {0,1,2,3,4,5,6}, is2 = {0,1,2,3,4,5,6};
     auto n = end(is) - begin(is), n2 = end(is2) - begin(is2);
