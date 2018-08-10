@@ -10,13 +10,91 @@ using namespace std;    //ËùÓĞÃüÃû¿Õ¼ä¶¼¼ÓÔØµ½Ä¬ÈÏ¹Ø¼ü×ÖÀï ¸öÈËÀÁÕâ¸ö²»ÊÇÌØ±ğÍÆ¼
 
 int main()
 {
-    //3.42
+    //3.45
+
 
 }
 
 
 
 /*
+    //3.45
+    int ia[3][4] = {
+			{0,1,2,3},
+			{4,5,6,7},
+			{8,9,10,11}
+		};
+    for (auto i = ia; i != end(ia); ++i){
+        for (auto u = *i; u != end(*i); ++u)
+            cout << *u << ' ';
+         cout << endl;
+    }
+
+
+    for (auto i = 0; i != 3; ++i){
+        for (auto u = 0; u != 4; ++u)
+            cout << ia[i][u] << ' ';
+        cout << endl;
+    }
+
+    for (auto &i : ia){
+        for (auto &u : i)
+            cout << u << ' ';
+        cout << endl;
+    }
+
+    //3.44
+    using int_arr = int[4];
+    typedef int int_arr[4];
+    int ia[3][4] = {
+			{0,1,2,3},
+			{4,5,6,7},
+			{8,9,10,11}
+		};
+    for (int_arr *i = ia; i != end(ia); ++i){
+        for (int *u = *i; u != end(*i); ++u)
+            cout << *u << ' ';
+         cout << endl;
+    }
+
+
+    for (size_t i = 0; i != 3; ++i){
+        for (size_t u = 0; u != 4; ++u)
+            cout << ia[i][u] << ' ';
+        cout << endl;
+    }
+
+    for (int_arr &i : ia){
+        for (int &u : i)
+            cout << u << ' ';
+        cout << endl;
+    }
+
+    //3.43
+    int ia[3][4] = {
+			{0,1,2,3},
+			{4,5,6,7},
+			{8,9,10,11}
+		};
+    for (auto i = ia; i != end(ia); ++i){
+        for (auto u = *i; u != end(*i); ++u)
+            cout << *u << ' ';
+         cout << endl;
+    }
+
+
+    for (size_t i = 0; i != 3; ++i){
+        for (size_t u = 0; u != 4; ++u)
+            cout << ia[i][u] << ' ';
+        cout << endl;
+    }
+
+    for (auto &i : ia){
+        for (auto &u : i)
+            cout << u << ' ';
+        cout << endl;
+    }
+
     //3.42
     vector<int> int_vec = {0,1,2,3,4,5};
     auto ls = int_vec.size();
