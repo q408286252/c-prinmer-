@@ -10,22 +10,71 @@ using namespace std;    //ËùÓĞÃüÃû¿Õ¼ä¶¼¼ÓÔØµ½Ä¬ÈÏ¹Ø¼ü×ÖÀï ¸öÈËÀÁÕâ¸ö²»ÊÇÌØ±ğÍÆ¼
 
 int main()
 {
-    //4.19
-    int i,ival;
-    int *ptr = &i;
-    vector<int> vec;
-    ptr != 0 && *ptr++; //²»ÕıÈ·Ê×ÏÈptrÊÇintÖ¸ÕëÎŞ·¨ÓÒÒÆÒ»¸ñ
-    ptr != 0 && (*ptr)++
-    ival++ && ival; // ²»ÕıÈ· ÒòÎªµ½µ×ÊÇÏÈµ÷ÓÃ ival++ »¹ÊÇival ÊÇÎ´Öª
-    ival +1 && ival;
-    vec[ival++] <= vec[ival];   //»¹ÊÇÒ»Ñù ival++ ºÍivalÄÇ¸öÏÈÔËĞĞÎ´Öª ÏÈºóË³Ğò²»Í¬½á¹û²»Í¬.
-    vec[ival +1] <= vec[ival];
-
-
+    //4.26
+    unsigned char qu = 0;
+    qu |= 1UL << 27;
+    bool bo = qu & (1UL << 27);
+    cout << bo << endl; //»á·¢Éú
 }
 
 
 /*
+   //4.25
+    'q' << 6 ·µ»ØµÄÖµ ¶ş½øÖÆÎª:00000000 00000000 00011100 01000000
+    Ê®½øÖÆÎª: 2^12 + 2^11 + 2^10 + 2^6 = 7232
+
+    //4.24
+    int grade = 55;
+    //Èç¹û×ó½áºÏ¾Í±ä³ÉÕâÑù  ÔÄ¶ÁÆğÀ´ºÜÄÑÊÜ
+    cout << ( (grade <60) ?
+             ( (grade <=75) ?
+              ( (grade <=90) ? "low pass" : "high pass" )
+              : "pass" )
+             : "fail" ) << endl;
+
+    //4.23
+    string s = "word";
+    string p1 = ( s +s[s.size() - 1] == "s" ) ? "" : "s" ;
+    //Ê×ÏÈ Òª¼ÓÀ¨ºÅ È»ºó sÊÇstring ºÍËı×öÅĞ¶ÏµÄ²»ÄÜÊÇ's'
+
+    //4.22
+    cout << ( (grade > 90) ?
+             "high pass" : (grade > 75) ?
+             "low pass" : (grade >= 60) ?
+             "pass" : "fail" ) << endl;
+
+
+    if (grade > 90){
+        cout << "high pass";
+    } else {
+        if (grade > 75){
+            cout << "low pass";
+        } else{
+            if (grade >= 60){
+                cout << "pass";
+            } else {
+                cout << "fail";
+            }
+        }
+    }
+    cout << endl;
+    //·Ï»°¿Ï¶¨µÚÒ»¸öºÃ°¡. µÚ¶ş¸öif else if else ¿´µÄÍ·´óºÃÂğ?
+
+    //4.21
+    vector<int> ints = {1,2,3,4,5,6};
+    for (auto i = ints.begin(); i != ints.end(); ++i)
+        (*i)%2 ? *i =*i * 2 : ' ';
+    cout << ints[0] << endl;
+
+    //4.20
+    vector<string>::iterator iter;      //=. =ÎŞÓïp137µÄÎÊÌâÒªÕÒ97Ò³ÄÚÈİ. Éñ¾­²¡°¡!!
+    *iter++;    //ºÏ·¨ iterÖ¸ÕëÓÒÒÆÒ»¸ñµÄÔªËØ·µ»Ø
+    (*iter)++;  //²»ºÏ·¨ ·µ»ØiterµÚÒ»¸öÔªËØ È»ºó+1 charÀàĞÍ²»ÄÜÔËËã
+    *iter.empty();  //²»ºÏ·¨  iterÖ¸ÕëÃ»ÓĞempty³ÉÔ±
+    iter->empty();      //ºÏ·¨ ÕÒµ½iterµÄÒıÓÃÔªËØ²¢ÕÒµ½empty³ÉÔ±ÔËĞĞ
+    ++*iter;        //²»ºÏ·¨ ºÍ(*iter)++ Ò»Ñù charÀàĞÍ²»ÄÜÔËËãµÄ
+    iter++->empty();      //ºÏ·¨ÒâË¼ÊÇ iterÖ¸ÕëÓÒÒÆÒ»¸öÈ»ºóÕâÔªËØµÄsmpty³ÉÔ±ÔËĞĞ
+
     //4.19
     int i,ival;
     int *ptr = &i;
