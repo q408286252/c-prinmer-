@@ -10,15 +10,106 @@ using namespace std;    //ËùÓĞÃüÃû¿Õ¼ä¶¼¼ÓÔØµ½Ä¬ÈÏ¹Ø¼ü×ÖÀï ¸öÈËÀÁÕâ¸ö²»ÊÇÌØ±ğÍÆ¼
 
 int main()
 {
-    //4.26
-    unsigned char qu = 0;
-    qu |= 1UL << 27;
-    bool bo = qu & (1UL << 27);
-    cout << bo << endl; //»á·¢Éú
+    return 0;
 }
 
 
 /*
+    //4.38
+    // j³ıiµÄÕûÖµ ×ª»»³É¸¡µãÊı ¸³Óè slope¸¡µãĞÍ
+    double slope = static_cast<double>(j/i);
+
+    //4.37
+    int i;
+    double d;
+    const string *ps;
+    char *pc;
+    void *pv;
+    pv = static_cast<void*>( const_cast<string*>(ps) );
+    i = reinterpret_cast<int>(pc);
+    pv = static_cast<void*>(&d);
+    pc = static_cast<char*>(pv);
+
+    //4.36
+    int i = 3;
+    double d = 3.44;
+    i *= static_cast<int>(d) ;
+    cout << i <<endl;
+
+    //4.35
+    char cval;
+    int ival;
+    unsigned int ui;
+    float fval;
+    double dval;
+
+    cval = 'a' + 3; // 'a'×ª»»³Éint ºÍ3ÔËËã
+    fval = ui - ival * 1.0; //ival ×ª»»³Édouble È»ºóÓë1.0ÔËËã½á¹ûÔÙ ×ª»»³ÉÎŞ·ûºÅÕûÊıĞÍ
+    dval = ui * fval;   // fval ×ª»»³Éint È»ºó×ª»»³Éunsigned int Óëui½øĞĞÔËËã
+    cval = ival + fval + dval;  //fval×ª»»³É int ÔÚ×ª»»³Édouble intµÄivalÒ²×ª»»³Édouble
+
+    //4.34
+    if (fval)   //²»½øĞĞ×ª»»
+    dval = fval + ival;     //  fval ÏÈ×ª»»³Éint È»ºóÔËËã
+    dval + ival * cval;     //  cval×ª»»³Éint ÔËËã½á¹ûÔÙ×ª»»³Édouble ºÍdvalÔËËã
+
+    //4.33
+    //someValue ÊÇÅĞ¶Ï ²»Îª0ÔòÔËĞĞ  xµİÔö1,yµİÔö1 Îª0ÔòÔËĞĞ xµİ¼õ1 yµİ¼õ1
+    someValue ? ++x, ++y : --x, --y
+
+    //4.32
+    constexpr int size = 5;
+    int ia[size] = {1,2,3,4,5};
+    // Ö¸ÕëptrÖ¸Ïòia[0],ixÖµÎª0; ixÖµ²»µÈÓÚsizeÖµ ÇÒ ptrËùÖ¸ÔªËØ²»µÈÓÚ iaµÄend();  Ã¿ÔÙ´ÎÑ­»· ixÖµ+1 ptrÖ¸ÕëÓÒÒÆÒ»¸ñ,
+    for (int *ptr = ia, ix = 0; ix != size && ptr != ia + size; ++ix, ++ptr)
+    {   cout << 1 <<endl;
+        }
+
+    //4.31
+    //Ê¹ÓÃºóÖÃ°æ±¾µÄ++ -- ÄÇ¾Í»á¶àÒ»¸öÑ­»· Òª°ÑÕâÒ»Ñ­»·¼ÆËã½øÈ¥»á±äÂé·³
+    //¾ÍÏñ ÄãÒªÑ­»·6´Î  ÓÃ0 +6´Î1¾ÍĞĞÎªÊ²Ã´ÒªÓÃ 1+5´Î1·µ»Ø6´Î?
+    vector<int> ivec;
+    vector<int>::size_type cnt = ivec.size();
+    for (vector<int>::size_type ix = 1; ix != ivec.size(); ix++, cnt-- ){
+        ivec[ix] = cnt;
+    }
+
+    //4.30
+    (sizeof x) + y
+    sizeof ( (*p).mem[i] )
+    (sizeof a ) < b
+    sizeof ( f() )
+
+    //4.29
+    int x[10];
+    int *p = x;
+    cout  << sizeof(x) / sizeof (*x) << endl;
+    // 40/4 ·µ»Ø10
+    cout << sizeof(p) / sizeof(*p) <<endl;
+    //  pÖ¸ÕëÕ¼4 / 40 µÃ0 ²»¶Ô ·µ»ØÎª1 ²âÊÔÁË  sizeof(*p)·µ»ØÎª4  Ô­ÒòÊÇ·µ»ØÊ±ºòÖ»ÕÒµ½intÀàĞÍÃ»ÓĞ²é¿´x.
+
+    //4.28
+    string s;
+    int i, *p;
+    long long ll;
+    //......
+    cout << sizeof i << ' ' << sizeof ll << ' ' << sizeof p
+        << ' ' << sizeof s << endl;
+
+    //4.27
+    unsigned long ua = 3, ub = 7;
+    ua & ub;    //11 ¡È 111 µÃ 29¸ö0 111
+    ua | ub;    //11 ¡É 111 µÃ 30¸ö0 11
+    ua && ub;   // true
+    ua || ub    // true
+
+    //4.26
+    unsigned int qu = 0;
+    qu |= 1UL << 27;
+    bool bo = qu & (1UL << 27);
+    cout << bo << endl;
+    //»á·¢Éúqu & (1UL << 27) Öµ²»Îª0µÄÇé¿ö ¾ßÌåÔ­Òò²»Çå³ş»òĞíËûÃÇ¶ş½øÖÆÊéĞ´¸ñÊ½²»Í¬.
+
    //4.25
     'q' << 6 ·µ»ØµÄÖµ ¶ş½øÖÆÎª:00000000 00000000 00011100 01000000
     Ê®½øÖÆÎª: 2^12 + 2^11 + 2^10 + 2^6 = 7232
