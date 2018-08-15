@@ -1,11 +1,25 @@
-#include <iostream>
-#include <string>
-#include "Sales_data.h"
+#include <iostream> //输入输出流
+#include <string>   //字符串文件
+#include <vector>   //容纳对象的容器 俗称列表
 
-using namespace std;
+
+using namespace std;    //所有命名空间都加载到默认关键字里 个人懒这个不是特别推荐
+
 int main()
 {
-
+    //5.14
+    int i =1, i_m=0;
+    string s, s_n="", s_m="";
+    while (cin > s){
+        if (s_n == s){
+            ++i;
+            ( i >= i_m ) ?  i_m =i; s_m = s; :  ;
+        } else{
+            s_n = s;
+            i = 1;
+        }
+    }
+    cout << s_m << "   " << i_m << endl;
 }
 
 /*  //2.6.2
