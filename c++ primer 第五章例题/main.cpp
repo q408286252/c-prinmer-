@@ -8,12 +8,42 @@ using namespace std;    //ËùÓĞÃüÃû¿Õ¼ä¶¼¼ÓÔØµ½Ä¬ÈÏ¹Ø¼ü×ÖÀï ¸öÈËÀÁÕâ¸ö²»ÊÇÌØ±ğÍÆ¼
 
 int main()
 {
-
-
+    //5.22
+    int itema = 0;
+    if (itema == 0)
+        throw runtime_error("½éÉÜ´íÎóÄÚÈİ");
 }
 
 
 /*
+    //5.22
+    for (int sz = get_size(); !sz.empty();){
+        if (sz <= 0)
+            continue;
+        ;// ....
+    }
+
+    //5.21
+    string s, s_n;
+    while (cin >> s)
+        if (!isupper(s[0])) //²»ÊÇ´óĞ´×ÖÄ¸Ôò
+            continue;
+        else{
+            if (s != s_n){
+                s_n = s;
+            }else{
+                break;
+            }
+        }
+
+    //5.20
+    string s, s_n;
+    while (cin >> s)
+        if (s != s_n)
+            s_n = s;
+        else
+            break;
+
     //5.19
     string rsp ="0";
     do {
