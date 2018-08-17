@@ -8,14 +8,46 @@ using namespace std;    //ËùÓĞÃüÃû¿Õ¼ä¶¼¼ÓÔØµ½Ä¬ÈÏ¹Ø¼ü×ÖÀï ¸öÈËÀÁÕâ¸ö²»ÊÇÌØ±ğÍÆ¼
 
 int main()
 {
-    //5.22
-    int itema = 0;
-    if (itema == 0)
-        throw runtime_error("½éÉÜ´íÎóÄÚÈİ");
+    //5.25
+    int ia, ib;
+    try{
+    cin >> ia >> ib;
+    if (ib ==0)
+        throw runtime_error("´íÎó ³ıÊıÎª0");
+    }catch (runtime_error err){
+        cout<< "³ıÊıÎª0ÁËÄã¿ÉÒÔÖØĞÂÊäÈëÒ»¸ö³ıÊı" <<endl;
+        cin >> ib;
+    }
+    cout << ia /ib << endl;
+
 }
 
 
 /*
+    //5.25
+    int ia, ib;
+    try{
+    cin >> ia >> ib;
+    if (ib ==0)
+        throw runtime_error("´íÎó ³ıÊıÎª0");
+    }catch (runtime_error err){
+        cout<< "³ıÊıÎª0ÁËÄã¿ÉÒÔÖØĞÂÊäÈëÒ»¸ö³ıÊı" <<endl;
+        cin >> ib;
+    }
+    cout << ia /ib << endl;
+
+    //5.24
+    int ia, ib;
+    cin >> ia >> ib;
+    if (ib ==0)
+        throw runtime_error("´íÎó ³ıÊıÎª0");
+    cout << ia /ib << endl;
+
+    //5.23
+    int ia, ib;
+    cin >> ia >> ib;
+    cout << ia + ib << endl;
+
     //5.22
     for (int sz = get_size(); !sz.empty();){
         if (sz <= 0)
