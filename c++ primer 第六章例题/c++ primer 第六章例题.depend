@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1534583844 source:f:\data\github\work\c++ primer 第六章例题\main.cpp
+	<iostream>
+	<string>
+	<cctype>
+	<vector>
+	<cstring>
+	"f.h"
+
+1534583804 f:\data\github\work\c++ primer 第六章例题\f.h
+	<iostream>
+	<string>
+	<cctype>
+	<vector>
+	<cstring>
+
