@@ -9,13 +9,81 @@ using namespace std;    //所有命名空间都加载到默认关键字里
 
 int main()
 {
+    //3.36.1
+    int is[] = {1,2,3}, is2[] = {1,2,3};
+    auto n = end(is) - begin(is), n2 = end(is2) - begin(is2);
+    for (int *p = begin(is), *e = end(is), *p2 = begin(is2), *e2 = end(is2);
+        p != e && p2 != e2; ++p,++p2){
+        --n;
+        --n2;
+        }
 
+    if (n == 0 && n2 == 0)
+            cout << "两数组数值都相等" << endl;
 }
 
 
 
 
 /*
+    //3.36.2
+    vector<int> is = {0,1,2,3,4,5,6}, is2 = {0,1,2,3,4,5,6};
+    auto n = end(is) - begin(is), n2 = end(is2) - begin(is2);
+    for (auto p = is.begin(), e = is.end(), p2 = is2.begin(), e2 = is2.end();
+        p != e && p2 != e2; ++p,++p2){
+        --n;
+        --n2;
+    }
+    if (n == 0 && n == n2)
+            cout << "两数组数值都相等" << endl;
+
+    //3.36.1
+    int is[] = {1,2,3}, is2[] = {1,2,3};
+    auto n = end(is) - begin(is), n2 = end(is2) - begin(is2);
+    for (int *p = begin(is), *e = end(is), *p2 = begin(is2), *e2 = end(is2);
+        p != e && p2 != e2; ++p,++p2){
+        --n;
+        --n2;
+        }
+
+    if (n == 0 && n2 == 0)
+            cout << "两数组数值都相等" << endl;
+
+    //3.35
+    int is[] = {1,2,3};
+    for (int *p = is, *e = end(is); p != e; ++p)
+        *p = 0;
+    cout << is[1] << endl;
+
+    //3.34
+    //p2 在p1右边第几个地方 的值 给与p1计算
+    //必须同一数组的元素 如果p1或p2所指向的元素不存在则非法的.
+
+    //3.33
+    //设定数组名称和类型容量时是默认初始化的,不初始化那就不存在这个数组也就无法使用
+
+    //3.32
+    int ia[10] = {0,1,2,3,4,5,6,7,8,9};
+    int iaa[10];
+    size_t n = 0;
+    vector<int> lala;
+    for (i : ia)
+        lala.push_back(i);
+    for (i : lala){
+        iaa[n] = i;
+        ++n;
+    }
+    cout << iaa[1] <<endl;
+
+    //3.31
+    int ia[10] = {0,1,2,3,4,5,6,7,8,9};
+
+//3.30
+    constexpr size_t array_size = 10;
+    int ia[array_size];
+    for (size_t ix = 1; ix <= array_size; ++ix)
+        ia[ix] = ix;   //这里错误 因为一开始循环ia[1] = 1; 但没设定ia[0]的值
+
  //3.29
     //优点:不可修改数量 防止错误的添加 删除
     //缺点不可修改数量 如果需要修改时候无法修改且 不能赋值和拷贝
