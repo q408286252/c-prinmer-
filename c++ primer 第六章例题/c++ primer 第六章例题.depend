@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1534583844 source:f:\data\github\work\c++ primer 第六章例题\main.cpp
+1534948764 source:f:\data\github\work\c++ primer 第六章例题\main.cpp
 	<iostream>
 	<string>
 	<cctype>
 	<vector>
 	<cstring>
-	"f.h"
+	"Chapter6.h"
 
 1534583804 f:\data\github\work\c++ primer 第六章例题\f.h
 	<iostream>
@@ -13,4 +13,6 @@
 	<cctype>
 	<vector>
 	<cstring>
+
+1534586950 f:\data\github\work\c++ primer 第六章例题\chapter6.h
 

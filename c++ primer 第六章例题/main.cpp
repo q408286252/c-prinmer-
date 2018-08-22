@@ -9,13 +9,338 @@ using namespace std;    //ËùÓĞÃüÃû¿Õ¼ä¶¼¼ÓÔØµ½Ä¬ÈÏ¹Ø¼ü×ÖÀï ¸öÈËÀÁÕâ¸ö²»ÊÇÌØ±ğÍÆ¼
 
 
 
+
+
+
 int main()
 {
 
-
 }
 
+
 /*
+
+
+    //6.48
+    string s;
+    while (cin >> s && s != sought) {
+    }
+    assert(cin);
+    //²»ºÏÀí.  ÎªÊ²Ã´ÒªÊäÈë²»µÈÓÚ sought¾ÍÑ­»·µÄÒ»¸ö¿Õ?
+    // ¶øÇÒassert(cin);ÅĞ¶ÏµÄÊÇcin ¹âĞ´cinÓÖ²»»áÊäÈë¶«Î÷¸øÄãÅĞ¶Ï!
+
+
+    //6.47
+// #define NDEBUG  Ğ´ÁË¾ÍÊÇ¹Ø²»Ğ´¾ÍÊÇ¿ª
+string print(vector<string> stra,int i )
+{
+    if (i != stra.size())
+        return  stra[i] + print(stra, i+1);
+    #ifndef NDEBUG
+        cout << stra.size() <<endl;
+    #endif // NDEBUG
+    return " ";
+}
+
+
+
+int main()
+{
+    vector<string> s = {"a","b","c","d"};
+    cout<<  print(s,0) << endl;
+}
+
+
+
+    //6.46
+    constexpr string &shorterString(const string &s1, const string &s2)
+    {
+        return s1.size() <= s2.size() ? s1 : s2;
+    }
+    //ÕâÊÇ´íÎóµÄÒòÎªËûµÄĞÎ²ÎÊÇÒıÓÃ¶øÒıÓÃ±ØĞëÒªÓĞ¸ö³õÊ¼±äÁ¿ ¶øconstexpr±ØĞëÊµÀıÊÇ×Ö·ûÖµ »¥ÏàÃ¬¶Ü.
+
+    //6.45
+    ÊÇ·ñ¸ÄĞ´³ÉÄÚÁªº¯Êı»¹ÊÇÒª¿´·µ»ØµÄÄÚÈİÊÇ·ñ¼òµ¥×îºÃÒ»ĞĞĞ´ÍêµÄÀàĞÍ.
+    6.42ÊÇ,6.38ÊÇ6.32ÊÇ 6.33²»ÊÇÒòÎªÓĞÁ½¸ö·µ»ØĞèÒªÅĞ¶Ï.
+
+
+    //6.44
+    inline bool isShorter(const string &s1, const string &s2)
+    {
+        return s1.size() < s2.size()
+    }
+
+
+    //6.43
+    °Éaº¯Êı·Å½øÍ·ÎÄ¼ş ÒòÎªinline ÎªÄÚÁªº¯Êı´ú±í´Ëº¯Êı½á¹¹¼òµ¥,Ê¹ÓÃ´ÎÊı¶à,
+
+
+    //6.42
+string make_plural(size_t, const string &word, const string &ending="es");
+string make_plural(size_t ctr, const string &word, const string &ending)
+{
+    return (ctr > 1) ? word + ending : word;
+}
+
+int main()
+{
+    string sa = "success", sb = "failure";
+    cout<< make_plural(2,sa) << "\n" << make_plural(0,sb) << endl;
+}
+//string ÈçºÎÊäÈë's'? ¹À¼ÆÊéĞ´´íÁË.
+
+
+    //6.41
+char *intit(int ht, int wd = 80, char bckgrnd = ' ');
+init();  //Î¥·¨ÒòÎª htÖµÃ»ÉèÖÃ
+init(24,10); //Õı³£
+inti(14,'*') ;   //Õı³£µ«ºÍ³õÖÔ²»·ş.
+
+
+    //6.40
+int ff(int a, int b =0, int c=0); //ÕâÀï²»ÖªµÀ³õÊ¼º¯ÊıµÄĞÎ²ÎÊÇ·ñÉèÖÃÁËÄ¬ÈÏº¯Êı, Èç¹ûµÚÈı¸öĞÎ²ÎÃ»ÉèÖÃÄÇÃ´ÊÇÕıÈ·µÄ.
+char *init(int ht = 24, int wd, char bckgrnd); //Èç¹ûº¯ÊıµÚÒ»¸öĞÎ²ÎÃ»ÉèÖÃÄ¬ÈÏÖµÄÇÃ´ÊÇÕıÈ·µÄ,
+
+
+    //6.39
+    int calc(int, int);
+    int calc(const int, const int); //Èç¹ûÊµ²ÎÊÇ³£Á¿ÓÅÏÈµ÷ÓÃ´Ëº¯Êı
+
+    int getc();
+    double get();   //´íÎó
+
+    int *reset(int *);
+    double *reset(double *);    //Èç¹ûÊµ²ÎÀàĞÍÊÇ¸¡µãÊıÓÅÏÈµ÷ÓÃËû
+
+
+    //6.38
+string s[] = {"a","b","c","d","d","d","d","d","d","d"};
+decltype(s) (*print(int i))
+{
+    return &s;
+}
+int main()
+{
+    cout<<  (* print(5))[9] << endl;
+}
+
+
+    //6.37
+    typedef int arr;
+    arr  (*print (int i))[10];
+
+    auto print(int i) -> string(*)[10];
+
+    string s[] = {"a","b","c","d","d","d","d","d","d","d"};
+    decltype(s) (*print(int i))
+
+
+    //6.36
+    string (*print(int i))[10];
+
+    //6.35
+    Ê×ÏÈÕâ¸öº¯ÊıÑ­»·ÏÂµÄ¾Ö²¿±äÁ¿ µİ¼õÖ»ÔËĞĞÒ»´Î.
+    ¶øÇÒ. val-- ÊÇ´«ÈëºóÔÙ¼õÖµµ¼ÖÂ´«ÈëµÄÖµÒ»Ö±Ã»±ä»áÏİÈëËÀÑ­»·
+
+    //6.34
+    Èç¹û´«ÈëµÄÊÇ¸ºÊı»áÏİÈëËÀÑ­»·, ÖÁÉÙÒ²ÒªÑ­»·µ½ÊıÖµÒç³öÈ»ºó´ÓĞÂ´Ó×î´óÖµµ½0,,ÒªºÜ¾Ã.
+    Èç¹û´«ÈëµÄÊÇ´óÓÚµÈÓÚ0µÄÊıÔò »á±ÈÖ®Ç°µÄº¯Êı¶àÔËĞĞÒ»¸öÑ­»·.
+
+    //6.33
+string print(vector<string> stra,int i )
+{
+    if (i != stra.size())
+        return  stra[i] + print(stra, i+1);
+    return "";
+}
+
+int main()
+{
+    vector<string> s = {"a","b","c","d"};
+    cout<<  print(s,0) << endl;
+}
+
+
+    //6.32
+int &get(int *arry, int index)  //´«Èëint Ö¸Õë ºÍint ÊıÖµ
+{
+    return arry[index]; //·µ»ØÖ¸Õë+ÏÂ±ê
+}
+
+int main()
+{
+    int ia[10];
+    for (int i=0; i != 10; ++i)
+        get(ia, i) = 1;
+        //get(ia,i) ÒâË¼Îª´«ÈëÒ»¸öiaµÚÒ»¸öÔªËØÖ¸Õë¸øarry, i±äÁ¿´«Èëindex ·µ»Ø & arry[index] =  ia[i]
+}
+
+
+    //6.31
+    //·µ»ØµÄÒıÓÃÎŞĞ§ ÊÇÒıÓÃµÄ¾Ö²¿±äÁ¿µÄÄÚÈİÊ±ºò,»òÕßÀàĞÍ²»¶Ô
+
+    //6.30
+bool str_subrange(const string &sa, const string &sb)
+{
+    if (sa.size() == sb.size())
+        return 1;
+    auto size = (sa.size() < sb.size()) ? sa.size() : sb.size();
+    for (decltype(size) i = 0; i != size; ++i)
+        if (sa[i] != sb[i])
+            return;     //²»»á´¦Àí»á±¨´í Ó¦¸Ã·µ»Ø return 0;
+}
+
+int main()
+{
+    string s = "lala", ss = "lala";
+    cout<< str_subrange(s,ss)<<endl;
+}
+
+    //6.29
+    initializer_listÊÇ³£Á¿ÔªËØ,Ñ­»·¿ØÖÆ±äÁ¿ÉèÖÃ³ÉÒıÓÃ ÄÇÃ´ÒıÓÃÒ»¸ö³£Á¿ÈçºÎĞŞ¸ÄµİÔö?
+
+    //6.28
+    elem ÊÇconst string  Ö¸ÕëÀàĞÍ.
+
+    //6.27
+    int print(initializer_list<int> il)
+{
+    int i=0;
+    for (auto beg = il.begin(); beg != il.end(); ++beg)
+        i += *beg;
+    return i;
+}
+
+int main()
+{
+    cout << print({10,20,33,450,60}) << endl;
+}
+
+
+
+
+    //6.26
+windows ´ò¿ªcmd È»ºóÕÒµ½Õâ¸öÎÄ¼ş main.cpp È»ºóÖÕ¶ËÊäÈë:
+    g++ -o main.exe main.cpp
+    Ö®ºóÊäÈë
+    main -d -o ofile data0  É¶µÄ¶¼ĞĞ. Ö»Òªmain¿ªÍ·¾ÍĞĞ.
+int main(int argc, char* *argv)
+{
+    for (int ii = 0; ii != argc; ++ii){
+        if (argv[ii])
+            while (*(argv[ii]))
+                cout<<*( (argv[ii])++);
+        cout << endl;
+    }
+}
+
+    //6.25
+    //6.2.5¿ç¶ÈÓĞµã´ó..
+    int main(string stra, string strb)
+{
+    stra += strb;
+    cout << stra << endl;
+}
+
+
+    //6.24
+int print(const int ia[10])
+//±¾ÈË±àÒëÆ÷Ö±½Ó°ÑÊı×é´«ÈëÒ»¸öÊı×éÃ»ÎÊ Ìâµ« const int i[10] = j; ¾ÍÏÔÊ¾´íÎó em....
+{
+    for (size_t i=0; i != 10; ++i)  //ÉèÖÃÒ»¸öiÎª¼ÆÊıÆ÷³õÊ¼Îª0,Ã¿´ÎÑ­»·Íê+1
+        cout <<ia[i] << endl;   //Ã¿¸öÑ­»·Êä³öiaµÚÒ»¸öÔªËØ
+}
+
+int main()
+{
+    int j[10] = {0,1,2,3,4,5,6,7,8,9};
+    print(j);
+}
+
+
+    //6.23
+//¹Ì¶¨Êı×éĞ´·¨
+int print(int ia, int (&ib)[2])
+{
+    cout << ia << ib[0] << ib[1] << endl;
+}
+
+
+int main()
+{
+    int i=0, j[2] = {0,1};
+    print(i,j);
+    //cout <<  << endl;
+}
+//´«ÈëÊı×éÈİÁ¿Ğ´·¨
+int print(int ia, int ib[], size_t size)
+{
+    cout << ia << "\n" ;
+    for (size_t i =0; i != size; ++i)
+        cout << ib[i] << endl;
+}
+int main()
+{
+    int i=0, j[2] = {0,1};
+    size_t t = 2;
+    print(i,j,t);
+}
+//´«ÈëÊ×Î»Ö¸ÕëĞ´·¨
+int print(int ia, int *beg, int *en)
+{
+    cout << ia << "\n" ;
+    while (beg != en)
+        cout << *beg++ << endl;
+}
+
+
+int main()
+{
+    int i=0, j[2] = {0,1};
+    print(i,j,end(j));
+}
+
+
+
+    //6.22
+int print( int* &ipa, int* &ipb)
+{
+    int *ipc;
+    ipc = ipa;
+    ipa = ipb;
+    ipb = ipc;
+}
+
+
+int main()
+{
+    int ia =2, ib = 3;
+    int *ipaa = &ia, *ipbb = &ib;
+    print(ipaa,ipbb);
+    cout << *ipaa << *ipbb << endl;
+}
+
+
+
+    //6.21
+    int print(const int i, const int *ip)
+{
+    if (i > *ip)
+        return i;
+    else
+        return *ip;
+}
+
+
+int main()
+{
+    int ia =2, ib = 3;
+    int ic = print(ia,&ib);
+    cout << ic << endl;
+    //Ö¸ÕëÀàĞÍÊÇconst int *ÀàĞÍ
+}
+
+
     //6.20
     //ÊµÀıÊÇ Ö±½ÓµÄÖµºÍ²»ÄÜĞŞ¸ÄµÄÖµ,
     //³£Á¿ĞŞ¸ÄÎªÆÕÍ¨ÒıÓÃÒ»°ã»á´íÎóÒòÎªÊµ²ÎÀï Êµ¼ÊÖµ ºÍ³£Á¿Öµ¶¼»á±¨´í.
