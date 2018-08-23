@@ -10,16 +10,74 @@ using namespace std;    //ËùÓĞÃüÃû¿Õ¼ä¶¼¼ÓÔØµ½Ä¬ÈÏ¹Ø¼ü×ÖÀï ¸öÈËÀÁÕâ¸ö²»ÊÇÌØ±ğÍÆ¼
 
 
 
+    int calc(char*, char*);
+    int calc(char* const, char* const);  //²»ºÏ·¨
+    ;
+    //
+
 
 
 int main()
 {
+    char *s;
+    const char *ss;
+    calc(s,s);
 
 }
 
 
 /*
+    //6.53
+    int calc(int&,int&){ cout<<"calc(int&,int&)" << endl;};
+    int calc(const int&, const int&){ cout<<"calc(const int&, const int&)" << endl;};
+    //Êµ²Î:·Ç³£,·Ç³£      ÔËĞĞµÚÒ»¸öº¯Êı,
+    //      ³£ ·Ç³£,   ·Ç³£ ³£,   ³£ ³£ ¶¼ÔËĞĞµÚ¶ş¸ö
 
+    int calc(char*, char*){ cout<<"calc(char*, char*)" << endl;};
+    int calc(const char*, const char*){ cout<<"calc(const char*, const char*)" << endl;};
+    //Êµ²Î:·Ç³£,·Ç³£ÔËĞĞµÚÒ»¸öº¯Êı,
+    //      ³£ ·Ç³£,   ·Ç³£ ³£,   ³£ ³£ ¶¼ÔËĞĞµÚ¶ş¸ö
+
+    int calc(char*, char*);
+    int calc(char* const, char* const);  //²»ºÏ·¨
+
+
+    //6.52
+void manip(int,int){};
+double dobj;
+
+int main()
+{
+    manip('a','z'); //Êµ²Î¶¼ÊÇchar½øĞĞËãÊõ×ª»»Îªint,int ÓÅÏÈ¼¶ºÜ²î
+    manip(55.4, dobj);  //Êµ²Î¶¼ÊÇ¸¡µãÊıÒ²ÊÇÒª½øĞĞËãÊõ×ª»»±ä³ÉÄ¬ÈÏint
+}
+
+
+    //6.51
+void f() { cout<< "F()" <<endl; };
+void f(int) {cout<< "F(int)" <<endl;};
+void f(int,int) {cout<< "f(int,int)" <<endl;};
+void f(double,double = 3.14) {cout<< "f(double,double = 3.14)" <<endl;};
+
+
+int main()
+{
+    //f(2.56, 42);  ±¨´í
+    //f(42);  //f(int)
+    //f(42,0);  //f(int,int)
+    f(2.56, 3.14); //f(double,double =3.14)
+}
+
+    //6.50
+    f(2.56, 42) //¿ÉĞĞº¯ÊıÎª void f(int,int); void f(double,double =3.15); ×îÖÕ»á¾Ü¾ø,¶şÒåĞÔ
+    f(42)   //¿ÉĞĞº¯ÊıÎª coid f(int); void f(double,double =3.15) »áÑ¡f(int)
+    f(42,0) //¿ÉĞĞº¯ÊıÎª void f(int,int); void f(double,double =3.15); »áÑ¡f(int,int)
+    f(2.56,3.14)    //¿ÉĞĞº¯ÊıÎªvoid f(int,int); void f(double,double =3.15); »áÑ¡f(double,double =3.15)
+
+
+    //6.49
+    //ËùÓĞ¸´ºÏº¯ÊıÃûµÄº¯Êı¶¼ÊôÓÚºòÑ¡º¯Êı,
+    //¿ÉĞĞº¯Êı¾ÍÊÇº¯ÊıËùĞèµÄĞÎ²ÎÀàĞÍ¸´ºÏÊµ²ÎÀàĞÍ(¿É×ª»»)
 
     //6.48
     string s;
