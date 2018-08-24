@@ -7,26 +7,123 @@
 
 using namespace std;    //所有命名空间都加载到默认关键字里 个人懒这个不是特别推荐
 
+int intdefa(const int ia,const int ib)
+{
+    return ia+ib;
+}
 
+int intdefb(const int ia,const int ib)
+{
+    return ia-ib;
+}
 
+int intdefc(const int ia,const int ib)
+{
+    return ia*ib;
+}
 
-    int calc(char*, char*);
-    int calc(char* const, char* const);  //不合法
-    ;
-    //
-
-
+int intdefd(const int ia,const int ib)
+{
+    return ia/ib;
+}
 
 int main()
 {
-    char *s;
-    const char *ss;
-    calc(s,s);
 
+    int (*ipa)(const int,const int) = intdefa;
+    int (*ipb)(const int,const int) = intdefb;
+    int (*ipc)(const int,const int) = intdefc;
+    int (*ipd)(const int,const int) = intdefd;
+    vector<decltype(ipa)> ipl = {ipa,ipb,ipc,ipd};
+    cout << ipl[0](12,6) << endl;
+    cout << ipl[1](12,6) << endl;
+    cout << ipl[2](12,6) << endl;
+    cout << ipl[3](12,6) << endl;
 }
 
 
 /*
+    //6.56
+    int intdefa(const int ia,const int ib)
+{
+    return ia+ib;
+}
+
+int intdefb(const int ia,const int ib)
+{
+    return ia-ib;
+}
+
+int intdefc(const int ia,const int ib)
+{
+    return ia*ib;
+}
+
+int intdefd(const int ia,const int ib)
+{
+    return ia/ib;
+}
+
+int main()
+{
+
+    int (*ipa)(const int,const int) = intdefa;
+    int (*ipb)(const int,const int) = intdefb;
+    int (*ipc)(const int,const int) = intdefc;
+    int (*ipd)(const int,const int) = intdefd;
+    vector<decltype(ipa)> ipl = {ipa,ipb,ipc,ipd};
+    cout << ipl[0](12,6) << endl;
+    cout << ipl[1](12,6) << endl;
+    cout << ipl[2](12,6) << endl;
+    cout << ipl[3](12,6) << endl;
+}
+
+
+    //6.55
+    int intdefa(const int ia,const int ib)
+{
+    return ia+ib;
+}
+
+int intdefb(const int ia,const int ib)
+{
+    return ia-ib;
+}
+
+int intdefc(const int ia,const int ib)
+{
+    return ia*ib;
+}
+
+int intdefd(const int ia,const int ib)
+{
+    return ia/ib;
+}
+
+int main()
+{
+
+    int (*ipa)(const int,const int) = intdefa;
+    int (*ipb)(const int,const int) = intdefb;
+    int (*ipc)(const int,const int) = intdefc;
+    int (*ipd)(const int,const int) = intdefd;
+    vector<decltype(ipa)> ipl = {ipa,ipb,ipc,ipd};
+}
+
+
+    //6.54
+    int intdefa(const int,const int)
+{
+    cout << "已运行"<<endl;
+}
+
+int main()
+{
+
+    int (*ip)(const int,const int) = intdefa;
+    vector<decltype(ip)> ipl = {ip};
+}
+
     //6.53
     int calc(int&,int&){ cout<<"calc(int&,int&)" << endl;};
     int calc(const int&, const int&){ cout<<"calc(const int&, const int&)" << endl;};
