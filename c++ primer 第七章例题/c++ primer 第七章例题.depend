@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1535220980 source:f:\data\github\work\c++ primer 第七章例题\main.cpp
+1535298740 source:f:\data\github\work\c++ primer 第七章例题\main.cpp
 	<iostream>
 	<string>
 	<cctype>
@@ -16,9 +16,9 @@
 	<cstring>
 	"Sales_data.h"
 
-1535220673 f:\data\github\work\c++ primer 第七章例题\sales_data.h
+1535301189 f:\data\github\work\c++ primer 第七章例题\sales_data.h
 	<iostream>
 	<string>
 
-1535221081 f:\data\github\work\c++ primer 第七章例题\person.h
+1535297698 f:\data\github\work\c++ primer 第七章例题\person.h
 

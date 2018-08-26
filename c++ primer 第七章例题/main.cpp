@@ -11,10 +11,9 @@ using namespace std;    //ËùÓĞÃüÃû¿Õ¼ä¶¼¼ÓÔØµ½Ä¬ÈÏ¹Ø¼ü×ÖÀï ¸öÈËÀÁÕâ¸ö²»ÊÇÌØ±ğÍÆ¼
 
 int main()
 {
-    /*
     Sales_data book1, book2;
-    if (book1.read(book1)){
-        while(book2.read(book2)){
+    if (read(book1)){
+        while(read(book2)){
             if (book1.isbn() == book2.isbn()){  //ÅĞ¶ÏÊé±¾µÄ±àºÅÊÇ·ñÒ»Ñù
                 book1.combine(book2);
                 print(book1);
@@ -22,9 +21,7 @@ int main()
                 cout << "ÉÏ±¾Êé¼ÇÂ¼:" << endl;
                 print(book1);
                 cout << "\n ĞÂÊé¼ÇÂ¼ÒÑ¸²¸ÇÉÏ±¾ÊéµÄ¼ÇÂ¼" << endl;
-                book1.name = book2.name;
-                book1.quantity = book2.quantity;
-                book1.price = book2.price;
+                book1 = book2;
 
             }
         }
@@ -32,16 +29,159 @@ int main()
     }else{
         cerr << "´íÎóÃ»ÓĞÊı¾İ" << endl;
     }
-*/
-
-//    Sales_data book1;
-//    cout<< book1.bookno << book1.fee << book1.name << book1.price << book1.quantity <<endl;
-    Person ps;
 }
 
 
 
 /*
+    //7.26
+    inline
+    double avg_price() const { return quantity ? fee/quantity : 0;}
+
+    //7.25
+    ²»ÄÜ,ÒòÎªÄ¬ÈÏµÄĞĞºÍ ¿íÊÇ0;
+
+
+    //7.23 7.24
+    //Õâ½ÚµÄÀı×Ó·Ç³£¾­µä. ÎÒ¸øÂú·Ö °ÉÖ®Ç°²»¶®µÄÈ«Åª¶®ÁË. ¿ÉÄÜÖ®Ç°µÄÓĞ´íÀÁµÃ¸ÄÁË..=.=
+class Screen{
+public:
+    Screen() = default;
+    Screen(std::string::size_type h, std::string::size_type w) : height(h), width(w), contents("                        ") {}
+    Screen(std::string::size_type h, std::string::size_type w, std::string s)
+            : height(h), width(w), contents(s){}
+
+    inline
+    char get(std::string::size_type h, std::string::size_type c);
+    Screen &mo(std::string::size_type r, std::string::size_type c);
+private:
+    std::string::size_type height, width, s;
+    std::string contents;
+};
+
+inline
+char Screen::get(std::string::size_type h, std::string::size_type c){
+    return contents[h*width + c];
+}
+
+Screen &Screen::mo(std::string::size_type h, std::string::size_type c){
+    s = h*width +c;
+    return *this;
+}
+
+
+    //7.22
+class Person{
+friend void read(Person &);
+friend void print(const Person &);
+public:
+    Person() = default;
+    Person(const std::string &s,const std::string &sa):name(s), address(s){}
+private:
+    std::string name;
+    std::string address;
+};
+
+
+    //7.21
+ÒÑĞŞ¸Ä
+//Sales_data.h
+class Sales_data{
+friend Sales_data add(const Sales_data&, const Sales_data&);
+friend void print(const Sales_data&);
+friend bool read(Sales_data&);
+public:
+    Sales_data() = default;
+    Sales_data(const std::string &s) : name(s) {}
+    Sales_data(int n) : quantity(n) {}
+    Sales_data(double p) : price(p), fee(p){}
+    Sales_data(const std::string &s, int n, double p)
+			:name(s), quantity(n), price(p), fee(p){}
+
+    Sales_data &combine(const Sales_data &ip)
+    {
+        quantity += ip.quantity;
+        fee += ip.fee;
+        return *this;
+    }
+
+    std::string isbn() const{return name;}
+
+private:
+    std::string name ;
+    int quantity = 0;
+    double price = 0.0;
+    double fee = 0.0;
+};
+
+//´«Èëcin ºÍ ÀàÊµÀı Ğ´ÈëÊµÀıÊı¾İ ·µ»Øcin
+bool read( Sales_data &item)
+{
+    double sum = 0;
+    std::cout << "ÊäÈëÊéÃû:";
+    std::cin >> item.name;
+    std::cout << "ÊäÈëÏúÊÛÊıÁ¿:";
+    std::cin >> item.quantity;
+    std::cout << "ÊäÈëµ¥¼Û:";
+    std::cin >> item.price;
+    item.fee = item.price *  item.quantity;
+    //Ğ´ÈëbooknoÊ¡ÂÔÁË.
+    return 1;
+    }
+
+//ÀàÊµÀı1Êı¾İ¸ø Àı3 È»ºó°ÑÀı2Êı¾İºÍÀı3Êı¾İµş¼Ó
+Sales_data add(const Sales_data &book1, const Sales_data &book2)
+{
+    Sales_data book3 = book1;
+    book3.combine(book2);
+    return book3;
+}
+
+//Êä³ö ÀàÊµÀıµÄĞÅÏ¢
+void print( const Sales_data &item)
+{
+    std::cout<< "ÊéµÄÃû×ÖÊÇ:" << item.name
+        << "\nÒÑÏúÊÛÊıÁ¿:" << item.quantity
+        << "\n¼Û¸ñ:"  << item.price
+        << "\n±¾ÊéÏúÊÛ½ğ¶î:" << item.fee;
+}
+
+
+
+    //7.20
+    ÓÑÔªºÜºÃµÄÈÃÍâ²¿º¯ÊıÄÜ¹»¿ØÖÆµÄÊ¹ÓÃĞŞ¸ÄÒşÊ½³ÉÔ±,
+    ±×¶ËÓĞÀà³ÉÔ±ÀïÃæÊÇÎŞ·¨µ÷ÓÃ ¶¨ÒåµÄº¯ÊıµÄ,
+
+
+    //7.19
+class Person{
+public:
+    Person() = default;
+    Person(const std::string &s,const std::string &sa):name(s), addrees(s){}
+private:
+    std::string name;
+    std::string addrees;
+};
+//°É³ÉÔ±µÄÒ»Ğ©ĞèÒª±àĞ´µÄ±£´æÄÚÈİ·â×°ÁË, ÒòÎªÈç¹ûĞèÒªĞŞ¸Ä¿ÉÒÔµ÷ÓÃº¯Êı,¶ø²»ÊÇÖ±½ÓÔÚ³ÉÔ±ÉÏĞŞ¸Ä,
+
+    //7.18
+    ·â×°¾ÍÊÇÒş²Ø²»¿ÉÏÔÊ¾ÄÚÈİ.
+    ÓĞĞ©¹Ø¼ü³ÉÔ±×÷ÓÃÓò¿ØÖÆµÄ±äÁ¿, Èç¹û±»Íâ²¿ĞŞ¸ÄÁËºó¹ûºÜÑÏÖØ,
+    ÄÜ·â×°²»¶ÔÍâµ÷ÓÃÓĞÕßºÜ´óµÄ°²È«ĞÔ.
+
+
+    //7.17
+    ÓĞÇø±ğ,
+    classÀàÏàµ±ÓÚ ÀàÌåµÚÒ»ĞĞĞ´ÁËprivate:
+    structÀàÏàµ±ÓÚ ÀàÌåµÚÒ»ĞĞĞ´ÁËpublic:
+
+
+    //7.16
+    ´ÎÊıÃ»ÓĞ Î»ÖÃÓĞÖ»ÒªÔÚÀàÒÔÄÚ¾ÍĞĞ,
+    publicÖ®ºó¶¨ÒåµÄ¶¼ÊÇÒª±»Íâ²¿µ÷ÓÃµÄ³ÉÔ±
+    privateÖ®ºó¶¨ÒåµÄ¶¼ÊÇÖ»ÔÚÀàÄÚ²¿Ê¹ÓÃµÄ³ÉÔ±;
+
+
     //7.15
 struct Person{
     Person() = default;
