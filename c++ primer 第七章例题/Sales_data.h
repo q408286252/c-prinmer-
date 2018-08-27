@@ -6,8 +6,8 @@ friend Sales_data add(const Sales_data&, const Sales_data&);
 friend void print(const Sales_data&);
 friend bool read(Sales_data&);
 public:
-    Sales_data() = default;
-    Sales_data(const std::string &s) : name(s) {}
+    Sales_data(std::string s=""): name(s){}
+    Sales_data(std::istream &is=std::cin){ read(*this);}
     Sales_data(int n) : quantity(n) {}
     Sales_data(double p) : price(p), fee(p){}
     Sales_data(const std::string &s, int n, double p)

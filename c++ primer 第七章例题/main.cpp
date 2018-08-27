@@ -5,12 +5,62 @@
 #include <cstring>  //提供C语言标准库的一些函数
 
 #include "Sales_data.h"
-#include "Person.h"
+//#include "Person.h"
+//#include "Screen.h"
 
 using namespace std;    //所有命名空间都加载到默认关键字里 个人懒这个不是特别推荐
 
-int main()
-{
+int main{
+
+};
+
+
+
+/*
+typedef string Type;    //string类型起了别名Type
+Type initVal();         //声明string返回的initval函数
+class Exercise{
+public:
+    typedef double Type;    //double类型起了别名Type;
+    Type setVal(Type);      //声明double返回类型的函数 setVal形参double
+    Type initVal();         //声明double返回类型的函数 initVal;
+private:
+    int val;
+};
+//错误声明与 定义返回的函数类型不一致,       形参类型也不一致
+Exercise::Type Exercise::setVal(Exercise::Type parm){
+    val = parm + initVal(); //调用类成员initVal时 发现未定义   还有val是int类型 而parm和initVal返回都是浮点型 运算会有损失
+    return val;
+}
+Exercise::Type Exercise::initVal(){ return 3.14;}   //补上函数
+*/
+
+
+
+
+
+/*
+class Windows_mgr{
+public:
+    void clear(){}
+};
+class Screen{
+public:
+    typedef std::string::size_type pos;
+    friend void Windows_mgr::clear();
+    pos size() const;
+    pos height, width, cursor;
+};
+Screen::pos Screen::size() const{ return height * width;}
+*/
+
+
+
+
+    //Acc ac;
+    //int ii=10;
+    //cout << ac.dummy(ii) <<endl;
+    /*
     Sales_data book1, book2;
     if (read(book1)){
         while(read(book2)){
@@ -29,11 +79,157 @@ int main()
     }else{
         cerr << "错误没有数据" << endl;
     }
-}
-
+    */
 
 
 /*
+    //7.40
+    Book类 需要 编号 名称 参考价 出版年份 书店售价 销量 本书销售额
+    Book(int i,std::string s, double is, std::string n, double isz, unsigned cnt, double f)
+            :bookno(i), name(s), fee(is), date(n), price(isz), sales(cnt), amount(f){}
+
+    //7.39
+    不合法
+    因为构造函数都设置默认实参就定义成了默认构造函数
+    两个默认构造函数肯定一个不对那么到底哪个是默认构造函数?
+
+
+    //7.38
+Sales_data(istream &in= std::cin){}
+
+
+    //7.37
+Sales_data first_item(cin); //调用了Sales_data(std::istream &is){ read(*this);} 略有修改 然后默认调用了read成员函数
+int main(){
+    Sales_data next;    //调用了 Sales_data(std::string s=""): name(s){}
+    Sales_data last("9-999-99999-9"); //调用了Sales_data(std::string s=""): name(s){} 但s的值被修改成"9-999-99999-9"
+
+
+    //7.36
+struct X{
+    X(int i, int j):base(i), rem(i %j){} //构造函数先初始化rem 后base 导致rem未初始化 修改rem的初始值就行
+    int rem, base;
+};
+
+
+    //7.35
+typedef string Type;    //string类型起了别名Type
+Type initVal();         //声明string返回的initval函数
+class Exercise{
+public:
+    typedef double Type;    //double类型起了别名Type;
+    Type setVal(Type);      //声明double返回类型的函数 setVal形参double
+    Type initVal();         //声明double返回类型的函数 initVal;
+private:
+    int val;
+};
+//错误声明与 定义返回的函数类型不一致,       形参类型也不一致
+Exercise::Type Exercise::setVal(Exercise::Type parm){
+    val = parm + initVal(); //调用类成员initVal时 发现未定义   还有val是int类型 而parm和initVal返回都是浮点型 运算会有损失
+    return val;
+}
+Exercise::Type Exercise::initVal(){ return 3.14;}   //补上函数
+
+
+    //7.34
+    会报错 因为编译器在类目前已编译成员没找到pos 在全局也没找到.
+
+
+
+    //7.33
+class Windows_mgr{
+public:
+    void clear(){}
+};
+class Screen{
+public:
+    typedef std::string::size_type pos;
+    friend void Windows_mgr::clear();
+    pos size() const;
+    pos height, width, cursor;
+};
+Screen::pos Screen::size() const{ return height * width;}
+//已修改  例题书写错误 返回类型必须要写作用域.
+
+    //7.32
+class Windows_mgr{
+public:
+    void clear(){}
+};
+class Screen{
+public:
+    friend void Windows_mgr::clear();
+};
+
+
+    //7.31
+    class X{
+    public:
+        class Y;
+        Y *ip;
+    };
+    class Y{
+        public:
+        class X;
+        X *ip;
+    };
+
+
+    //7.30
+    增加了思维复杂度? 要考虑this 还要考虑函数指针是不是常量  如果调用函数一个常量指针一个非常量还会报错.
+    优点,连续的调用在理解后 行云流水 不需要用过多的行来表达一个意思.
+
+    //7.29
+    正确
+
+
+    //7.28
+    答第一行输出的是修改了的内容
+    第二行表达式输出的是未修改前的实例内容
+
+
+    //7.27
+class Screen{
+public:
+    Screen() = default;
+    Screen(std::string::size_type h, std::string::size_type w) : height(h), width(w), contents("aaaaaaaaaabbbbbbbbbbcccccccccc") {}
+    Screen(std::string::size_type h, std::string::size_type w, std::string s)
+            : height(h), width(w){}
+    Screen(std::string::size_type h, std::string::size_type w, char s)
+            : height(h), width(w), st(s){}
+
+    inline
+    char get(std::string::size_type h, std::string::size_type c);
+    Screen &move(std::string::size_type r, std::string::size_type c);
+    Screen &set(char ch);
+    Screen &display(decltype(std::cout) &out);
+private:
+    std::string::size_type height, width, cursor;
+    char st;
+    std::string contents = "aaaaaaaaaabbbbbbbbbbcccccccccc";
+};
+
+inline
+char Screen::get(std::string::size_type h, std::string::size_type c){
+    return contents[h*width + c];
+}
+
+Screen &Screen::move(std::string::size_type h, std::string::size_type c){
+    cursor = h*width +c;
+    return *this;
+}
+
+Screen &Screen::set(char ch){
+    contents[cursor] = ch;
+    return *this;
+}
+
+Screen &Screen::display(decltype(std::cout) &out){
+    out<<contents;
+    return *this;
+}
+
+
     //7.26
     inline
     double avg_price() const { return quantity ? fee/quantity : 0;}

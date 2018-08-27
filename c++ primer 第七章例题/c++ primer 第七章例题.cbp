@@ -33,6 +33,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="Person.h" />
+		<Unit filename="Screen.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
