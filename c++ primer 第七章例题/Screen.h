@@ -4,8 +4,8 @@ public:
     Screen(std::string::size_type h, std::string::size_type w) : height(h), width(w), contents("aaaaaaaaaabbbbbbbbbbcccccccccc") {}
     Screen(std::string::size_type h, std::string::size_type w, std::string s)
             : height(h), width(w){}
-    Screen(std::string::size_type h, std::string::size_type w, char s)
-            : height(h), width(w), st(s){}
+    Screen(std::string::size_type h, std::string::size_type w, char s,std::string ss)
+            : height(h), width(w), st(s), contents(ss){}
 
     inline
     char get(std::string::size_type h, std::string::size_type c);

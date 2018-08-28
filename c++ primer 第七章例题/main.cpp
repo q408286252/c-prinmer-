@@ -4,16 +4,31 @@
 #include <vector>   //容纳对象的容器 俗称列表
 #include <cstring>  //提供C语言标准库的一些函数
 
+#include "Sales_item.h"
 #include "Sales_data.h"
-//#include "Person.h"
-//#include "Screen.h"
+#include "Person.h"
+#include "Screen.h"
 
 using namespace std;    //所有命名空间都加载到默认关键字里 个人懒这个不是特别推荐
 
-int main{
-
+class NoDefault{
+public:
+    NoDefault(int i):in(i){ cout<<"运行了No--";}
+private:
+    int in;
+};
+class C{
+public:
+    C(int i): obj1(i){ cout<<"运行了C--";}
+    C():C(0){}
+    NoDefault obj1;
 };
 
+int main()
+{
+    Person la;
+
+}
 
 
 /*
@@ -35,10 +50,6 @@ Exercise::Type Exercise::setVal(Exercise::Type parm){
 Exercise::Type Exercise::initVal(){ return 3.14;}   //补上函数
 */
 
-
-
-
-
 /*
 class Windows_mgr{
 public:
@@ -54,12 +65,6 @@ public:
 Screen::pos Screen::size() const{ return height * width;}
 */
 
-
-
-
-    //Acc ac;
-    //int ii=10;
-    //cout << ac.dummy(ii) <<endl;
     /*
     Sales_data book1, book2;
     if (read(book1)){
@@ -82,7 +87,120 @@ Screen::pos Screen::size() const{ return height * width;}
     */
 
 
+
+
+
+
+
+
+
+
+
+
 /*
+    //7.51
+    为什么容器是 而string不是很简单.
+    容器的类型固定死了 在声明的时候就要输入类型. 如果变换了类型报错是肯定的.
+    string不是 因为他本身的 保存对象是 字符串字符串本身就需要转换类型
+    至于为什么const char*不行 因为他是常量啊!
+
+
+    //7.50
+    Person(const std::string &s,const std::string &sa):name(s), address(s){}
+    Person():Person("",""){}
+    explicit Person(const std::string &s):Person(s,""){}
+
+
+    //7.49
+    Sales_data item;
+    string  s = "0";
+    item.combine(s);
+    print(item);
+    //首先如果构造函数 Sales_data(std::string s): name(s){} 加入了explicit不管怎么改combine函数形参都是报错
+    //如果是Sales_data &combine(Sales_data);会在函数里生成一个一模一样实例进行运算
+    //Sales_data &combine(Sales_data &);这个我会报错因为我的add函数引用它运算 参数是常量,常量不能普通引用导致报错
+    //Sales_data &combine(const Sales_data &ip); 和第一个声明结果一样. 但是他是常量更稳定些.
+
+
+    //7.48
+    string null_isbn("9-999-99999-9");
+    Sales_data item1(null_isbn);    //创建item1实例name参数为9-999-99999-9
+    Sales_data item2("9-999-99999-9");  //创建item2实例name参数为9-999-99999-9
+    就算写了explicit还是能创建  我还以为字符串的不行呢....
+
+
+    //7.47
+    应该. 因为需要使用实例时 都是些完整的名称(形参)
+    如果编写错误而被完美调用了. 那么说明此程序的运行和编译者的想法不一致...
+
+
+    //7.46
+    a 不正确, 构造函数可以没有.编译器会自己添加.
+    b 错误 默认构造函数参数可以空也可以输入默认值,
+    c 错  如果构造函数写了不设置默认的 你不输入参数就会报错.
+    d 对
+
+
+    //7.45
+    合法. 因为C类有默认构造函数啊. 顺便说一下 这个容器一下子定义了10次C和10次Nodefault
+
+    //7.44
+    不合法 因为 容器默认初始化10个Nodefault类
+    但Nodefault类没有默认构造函数. 会报错.
+    给Nodefault类添加一行默认构造函数就行.
+    NoDefault():NoDefault(0){}
+
+
+    //7.43
+class NoDefault{
+public:
+    NoDefault(int i):in(i){ cout<<"运行了No--";}
+private:
+    int in;
+};
+class C{
+public:
+    C(int i): obj1(i){ cout<<"运行了C--";}
+    C():C(0){}
+    NoDefault obj1;
+};
+
+int main()
+{
+    C c;
+}
+
+
+    //7.42
+class Book{
+public:
+    Book(int i,std::string s, double is, std::string n, double isz, unsigned cnt, double f)
+            :bookno(i), name(s), fee(is), date(n), price(isz), sales(cnt), amount(f){}
+    Book():Book(0,"",0.0,"0000-00-00",0.0,0,0.0){}
+private:
+    int bookno;
+    std::string name,date;
+    unsigned sales;
+    double fee,price,amount;
+};
+//又丑又长. 随叫你取了那么多变量..
+
+    //7.41
+    Sales_data(std::string s, int n, double p)
+			:name(s), quantity(n), price(p), fee(p*n){ std::cout<<"完整构造--";}
+    Sales_data(): Sales_data("",0,0.0){ std::cout<<"默认--";}
+    Sales_data(std::string s): Sales_data(s,0,0){ std::cout<<"string--";}
+    Sales_data(std::istream &is):Sales_data("",0,0){ std::cout<<"cout--"; read(*this);}
+    Sales_data(double p) : Sales_data("",0,p){ std::cout<<"小数--";}
+    Sales_data(int n) : Sales_data("",n,0) {std::cout<<"整数--";}
+    //对构造函数进行了修改 注意默认函数不能再
+    Sales_data s1;
+    Sales_data s2("lala");
+    Sales_data s3(3.14);
+    Sales_data s5(40);
+    Sales_data s4(std::cin);
+    //测试的调用
+
     //7.40
     Book类 需要 编号 名称 参考价 出版年份 书店售价 销量 本书销售额
     Book(int i,std::string s, double is, std::string n, double isz, unsigned cnt, double f)

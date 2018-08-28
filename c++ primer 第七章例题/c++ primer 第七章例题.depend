@@ -1,11 +1,14 @@
 # depslib dependency file v1.0
-1535386997 source:f:\data\github\work\c++ primer 第七章例题\main.cpp
+1535474908 source:f:\data\github\work\c++ primer 第七章例题\main.cpp
 	<iostream>
 	<string>
 	<cctype>
 	<vector>
 	<cstring>
+	"Sales_item.h"
 	"Sales_data.h"
+	"Person.h"
+	"Screen.h"
 	<iostream>
 	<string>
 	<iostream>
@@ -15,11 +18,15 @@
 	<cstring>
 	"Sales_data.h"
 
-1535387006 f:\data\github\work\c++ primer 第七章例题\sales_data.h
+1535474951 f:\data\github\work\c++ primer 第七章例题\sales_data.h
 	<iostream>
 	<string>
 
 1535340802 f:\data\github\work\c++ primer 第七章例题\person.h
 
-1535344132 f:\data\github\work\c++ primer 第七章例题\screen.h
+1535463555 f:\data\github\work\c++ primer 第七章例题\screen.h
+
+1345114212 f:\data\github\work\c++ primer 第七章例题\sales_item.h
+	<iostream>
+	<string>
 

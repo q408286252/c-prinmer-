@@ -6,12 +6,13 @@ friend Sales_data add(const Sales_data&, const Sales_data&);
 friend void print(const Sales_data&);
 friend bool read(Sales_data&);
 public:
-    Sales_data(std::string s=""): name(s){}
-    Sales_data(std::istream &is=std::cin){ read(*this);}
-    Sales_data(int n) : quantity(n) {}
-    Sales_data(double p) : price(p), fee(p){}
-    Sales_data(const std::string &s, int n, double p)
-			:name(s), quantity(n), price(p), fee(p){}
+    Sales_data(std::string s, int n, double p)
+			:name(s), quantity(n), price(p), fee(p*n){}
+    Sales_data(): Sales_data("",0,0.0){}
+    Sales_data(std::string s): Sales_data(s,0,0){}
+    Sales_data(std::istream &is):Sales_data("",0,0){ read(*this);}
+    Sales_data(double p) : Sales_data("",0,p){}
+    Sales_data(int n) : Sales_data("",n,0) {}
 
     Sales_data &combine(const Sales_data &ip)
     {
@@ -25,6 +26,7 @@ public:
 private:
     inline
     double avg_price() const { return quantity ? fee/quantity : 0;}
+
     std::string name ;
     int quantity = 0;
     double price = 0.0;

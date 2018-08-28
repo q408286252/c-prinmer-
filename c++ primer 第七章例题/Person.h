@@ -2,8 +2,9 @@ class Person{
 friend void read(Person &);
 friend void print(const Person &);
 public:
-    Person() = default;
     Person(const std::string &s,const std::string &sa):name(s), address(s){}
+    Person():Person("",""){}
+    explicit Person(const std::string &s):Person(s,""){}
 private:
     std::string name;
     std::string address;
