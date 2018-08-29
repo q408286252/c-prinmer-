@@ -1,16 +1,41 @@
 #include <iostream> //输入输出流
 #include <string>   //字符串文件
-#include <cctype>   //包含单个字母数字判断函数   就是isalnum()这类判断数字还是标点字符来着
+#include <cctype>   //单个字符判断(是否是符号 数字 标点 字母啊 什么的.)函数的库
 #include <vector>   //容纳对象的容器 俗称列表
 #include <cstring>  //提供C语言标准库的一些函数
 
 #include "Sales_item.h"
-#include "Sales_data.h"
+//#include "Sales_data.h"
 #include "Person.h"
 #include "Screen.h"
 
 using namespace std;    //所有命名空间都加载到默认关键字里 个人懒这个不是特别推荐
 
+class Debug{
+public:
+    constexpr Debug(bool b = false):sz(b), io(b), of(b){}
+
+    constexpr bool onoff() { return sz||io||of;}
+    void set_sz(bool b){ sz = b;}
+    void set_io(bool b){ io = b;}
+    void set_of(bool b){ of = b;}
+    bool sz,io,of;
+};
+
+
+
+int main()
+{
+    constexpr Debug bug1(true);
+    if(bug1.onoff() )
+        cout << "运行" <<endl;
+    cout << bug1.of <<endl;
+}
+
+
+
+
+/*
 class NoDefault{
 public:
     NoDefault(int i):in(i){ cout<<"运行了No--";}
@@ -24,12 +49,12 @@ public:
     NoDefault obj1;
 };
 
-int main()
-{
-    Person la;
-
-}
-
+struct Sales_data{
+    std::string bookNo;
+    unsigned units_sold;
+    double revenue;
+};
+*/
 
 /*
 typedef string Type;    //string类型起了别名Type
@@ -98,6 +123,42 @@ Screen::pos Screen::size() const{ return height * width;}
 
 
 /*
+    //7.56
+
+
+    //7.55
+    不是,
+    没有constexpr 函数,
+    没有默认的构造函数,
+
+
+    //7.54
+    不能,因为 那些set开头的修改了 成员值 这在constexpr是不允许的 且 还没有返回.
+
+
+    //7.53
+class Debug{
+public:
+    constexpr Debug(bool b = false):sz(b), io(b), of(b){}
+
+    constexpr bool onoff() { return sz||io||of;}
+    void set_sz(bool b){ sz = b;}
+    void set_io(bool b){ io = b;}
+    void set_of(bool b){ of = b;}
+    bool sz,io,of;
+};
+
+
+
+    //7.52
+struct Sales_data{
+    std::string bookNo;
+    unsigned units_sold;
+    double revenue;
+};
+Sales_data sa = {"978-0590353403",25,15.99};
+
+
     //7.51
     为什么容器是 而string不是很简单.
     容器的类型固定死了 在声明的时候就要输入类型. 如果变换了类型报错是肯定的.
