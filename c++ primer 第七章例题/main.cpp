@@ -4,13 +4,23 @@
 #include <vector>   //容纳对象的容器 俗称列表
 #include <cstring>  //提供C语言标准库的一些函数
 
-#include "Sales_item.h"
+//#include "Sales_item.h"
 //#include "Sales_data.h"
-#include "Person.h"
-#include "Screen.h"
+//#include "Person.h"
+//#include "Screen.h"
+//#include "Account.h"
+#include "example.h"
 
 using namespace std;    //所有命名空间都加载到默认关键字里 个人懒这个不是特别推荐
 
+int main()
+{
+    Example ex;
+    cout << ex.vec[9] << endl;
+}
+
+
+/*
 class Debug{
 public:
     constexpr Debug(bool b = false):sz(b), io(b), of(b){}
@@ -21,19 +31,7 @@ public:
     void set_of(bool b){ of = b;}
     bool sz,io,of;
 };
-
-
-
-int main()
-{
-    constexpr Debug bug1(true);
-    if(bug1.onoff() )
-        cout << "运行" <<endl;
-    cout << bug1.of <<endl;
-}
-
-
-
+*/
 
 /*
 class NoDefault{
@@ -123,7 +121,48 @@ Screen::pos Screen::size() const{ return height * width;}
 
 
 /*
+class Example{
+public:
+    //static double rate = 6.5;   //错误 因为在类里面不加const constexpr等就直接定义值;
+    static double rate;
+    static const int vecSize = 20;
+    std::vector<double> vec();
+    //static vector<double> vec(vecSize); //错误vector 需要加载域名才能访问
+    //static constexpr std::vector<double> vec(50); 很奇怪这个也报错
+    std::vector<double> vec();  //容量数不写内容则正确....
+};
+#include "example.h"
+    double Example::rate;
+    //vector<double> Example::vec;  //没加std 且 之前声明过了重复声明
+
+    //7.57
+    //Account.h文件
+class Account{
+public:
+    int read(int = bookno);
+    int bookna = bookno;
+private:
+    static const int bookno = 30;
+    //  static Bar book;  错误 很奇怪 我的编译器不支持 静态变量写成未定义类型.
+};
+int Account::read(int inta){
+    return inta*inta;
+}
+主文件
+#include "Account.h"
+int main()
+{
+    Account acca;
+    //cout << acca.read() << endl;
+    cout << acca.bookna << endl;
+    cout << acca.read() << endl;
+}
+
     //7.56
+    //类的静态成员是 在实例和调用完毕的过程中一直存在的变量.
+    //优点:通用性; 不删除性; 易修改;
+    //区别:普通成员调用实例时每次参数可能不一样, 而静态变量是保持一致的.
+    如果不调用实例 是无法访问成员的 二静态变量可以随时访问它;
 
 
     //7.55
@@ -157,6 +196,8 @@ struct Sales_data{
     double revenue;
 };
 Sales_data sa = {"978-0590353403",25,15.99};
+
+
 
 
     //7.51
