@@ -15,8 +15,7 @@ using namespace std;    //ËùÓĞÃüÃû¿Õ¼ä¶¼¼ÓÔØµ½Ä¬ÈÏ¹Ø¼ü×ÖÀï ¸öÈËÀÁÕâ¸ö²»ÊÇÌØ±ğÍÆ¼
 
 int main()
 {
-    Example ex;
-    cout << ex.vec[9] << endl;
+
 }
 
 

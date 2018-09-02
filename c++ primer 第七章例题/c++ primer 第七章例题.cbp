@@ -32,6 +32,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../c++ primer 第八章例题/Sales_data.h" />
 		<Unit filename="Account.h" />
 		<Unit filename="Person.h" />
 		<Unit filename="Screen.h" />

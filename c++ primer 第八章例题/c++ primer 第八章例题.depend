@@ -1,8 +1,12 @@
 # depslib dependency file v1.0
-1535797143 source:f:\data\github\work\c++ primer 第八章例题\main.cpp
+1535906772 source:f:\data\github\work\c++ primer 第八章例题\main.cpp
 	<iostream>
 	<string>
 	<cctype>
 	<vector>
 	<cstring>
+	<fstream>
+	"Sales_data.h"
+
+1535906446 f:\data\github\work\c++ primer 第八章例题\sales_data.h
 
