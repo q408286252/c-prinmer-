@@ -4,16 +4,98 @@
 #include <vector>   //容纳对象的容器 俗称列表
 #include <cstring>  //提供C语言标准库的一些函数
 #include <fstream>  //文件IO
+#include <sstream>  //stringIO
 
 #include "Sales_data.h"
 
 using namespace std;
 
-
+struct PersonInfo{
+    string name;
+    vector<string> phones;
+};
 
 int main()
 {
+    //定义后在添加内容不就完了? 对了要及时清空缓存
     ifstream in("data.txt");
+    string line, word;
+    istringstream record;
+    vector<PersonInfo> people;	//保存实例也就是 通讯录
+    while (getline(in, line)){		//输入每行给line
+        PersonInfo info;			//通讯人实例info
+        record.str(line);
+        record >> info.name;		//用string流传入第一个string
+        while (record >> word)	//如果string流还能传递则继续
+            cout << word;	//把之后的电话string都添加到phones容器里
+        people.push_back(info);	//把当前通讯人保存到容器里.
+        record.clear();
+    }
+
+}
+
+
+/*
+    //8.12
+    这是一个简单的类, 他的初始值都是需要进行输入 没有指针引用等不能为空成员.
+
+
+    //8.11
+    //定义后在添加内容不就完了? 对了要及时清空缓存
+    ifstream in("data.txt");
+    string line, word;
+    istringstream record;
+    vector<PersonInfo> people;	//保存实例也就是 通讯录
+    while (getline(in, line)){		//输入每行给line
+        PersonInfo info;			//通讯人实例info
+        record.str(line);
+        record >> info.name;		//用string流传入第一个string
+        while (record >> word)	//如果string流还能传递则继续
+            cout << word;	//把之后的电话string都添加到phones容器里
+        people.push_back(info);	//把当前通讯人保存到容器里.
+        record.clear();
+    }
+
+
+    //8.10
+    string stra;
+    vector<string> strs;
+    ifstream in("data.txt");
+    while (getline(in, stra)){
+        strs.push_back(stra);
+    }
+    for (auto p= strs.begin(); p != strs.end(); ++p){
+        istringstream instr(*p);
+        instr >> stra;  //试了一下不能直接输入和输出流对接..
+        cout << stra;
+        instr.clear();
+    }
+
+
+    //8.9
+istream &print(istream &in){
+    string stra, strb;
+    while (getline(in, stra)){
+        istringstream strin(stra);
+        while (strin >> strb)
+            cout << strb;
+        strin.clear();
+    }
+    in.clear();
+    return in;
+}
+
+int main()
+{
+
+    print(cin);
+
+}
+
+
+    //8.7  8.8
+    ifstream in("data.txt");
+    ofstream out("out.txt", ofstream::app);
     Sales_data book1, book2;
     if ( in.good() ){
         book1.read(in);
@@ -22,21 +104,18 @@ int main()
             in.close();
             if (book1.name == book2.name){
                 book1.quantity += book2.quantity;
-                cout << "本次记录和之前销售记录合并" << endl;
+                out << "本次记录和之前销售记录合并" << endl;
             }else{
-                cout << "前一本名为:"<< book1.name <<"前一本销售量为共:" << book1.quantity << endl;
+                out << "前一本名为:"<< book1.name <<"前一本销售量为共:" << book1.quantity << endl;
                 book1.name = book2.name;
                 book1.quantity = book2.quantity;
             }
         }
-        cout << "最后一本销售量为:"  << book1.quantity << endl;
+        out << "最后一本销售量为:"  << book1.quantity << endl;
     }else{
         cerr << "错误没有数据" << endl;
     }
-}
 
-
-/*
 
     //8.6
     ifstream in("data.txt");

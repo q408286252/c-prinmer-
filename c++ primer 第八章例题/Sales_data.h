@@ -10,3 +10,4 @@ struct Sales_data{
         return in;
     }
 };
+
