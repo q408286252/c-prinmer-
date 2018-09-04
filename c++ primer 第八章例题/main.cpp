@@ -18,24 +18,49 @@ struct PersonInfo{
 int main()
 {
     //定义后在添加内容不就完了? 对了要及时清空缓存
-    ifstream in("data.txt");
-    string line, word;
-    istringstream record;
-    vector<PersonInfo> people;	//保存实例也就是 通讯录
-    while (getline(in, line)){		//输入每行给line
-        PersonInfo info;			//通讯人实例info
-        record.str(line);
-        record >> info.name;		//用string流传入第一个string
-        while (record >> word)	//如果string流还能传递则继续
-            cout << word;	//把之后的电话string都添加到phones容器里
-        people.push_back(info);	//把当前通讯人保存到容器里.
-        record.clear();
+    ifstream in("in.txt");
+    string strl;
+    while (getline(in, &strl)){
+        ostringstream strout, strcerr;
+        for (const auto &str : strl){
+            strout << str;
+        }
+        if (strout.str().empty())
+            cout << strout.str() << endl;
+        else
+            cerr << strout.str() << endl;
     }
 
 }
 
 
 /*
+
+
+
+    //8.14
+    什么么设置 常量 auto 引用
+    设置常量是因为 引用在循环中引用不会修改.
+    引用不会进行拷贝节省内存
+    至于为什么是auto 节省写类型时间把..
+
+
+    //8.13
+        //定义后在添加内容不就完了? 对了要及时清空缓存
+    ifstream in("in.txt");
+    string strl;
+    while (getline(in, strl)){
+        ostringstream strout, strcerr;
+        for (const auto &str : strl){
+            strout << str;
+        }
+        if (strout.str().empty())
+            cout << strout.str() << endl;
+        else
+            cerr << strout.str() << endl;
+    }
+
+
     //8.12
     这是一个简单的类, 他的初始值都是需要进行输入 没有指针引用等不能为空成员.
 
