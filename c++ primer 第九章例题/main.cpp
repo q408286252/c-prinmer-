@@ -14,69 +14,29 @@ using namespace std;
 
 
 
-int main()
-{
 
-    vector<int> iv;
-    vector<int>::iterator iter = iv.begin(),
-                         mid = iv.begin() + iv.size()/2;
-    while (iter != mid)
-        if (*iter == some_val)
-            iv.insert(iter, 2 * some_val);
-
-    //错误1 some_val是啥?
-    //错误2 很有可能while死循环
-    //错误3 往容器添加元素指针会失效
-
-    int some_val = 4;
-    vector<int> iv = {0,1,2,3,4,5,6,7,8,9,10}, ivb;
-    vector<int>::iterator iter = iv.begin(),
-                         mid = iv.begin() + iv.size()/2;
-    while (iter != mid){
-        if (*iter == some_val)
-            ivb.insert(ivb.begin(), 2 * some_val);
-        ++iter;
-    }
-    cout << ivb[0] << endl;
-
-
-/*
-    string word;
-    vector<string> strs;
-    auto iter = strs.begin()
-    //cin输出的string给word 只要cin不终止一直循环
-    while (cin >> word)
-        //word插入strs的迭代器首; 然后 刷新iter的迭代器位置到新的首部;
-        iter = strs.insert(iter, word);
-    for (auto ip = strs.begin(); ip != strs.end(); ++ip)
-        cout << *ip << endl;
-
-    list<int> ilsa = {0,1,2,3,4};
-    deque<int> dequesa, dequesb;
-    for (auto ip = ilsa.begin(); ip != ilsa.end(); ++ip)
-        if ( (*ip%2) == 1 ){
-            dequesa.push_back(*ip);
-        }else{
-            dequesb.push_back(*ip);
-        }
-    cout << dequesa[0] << endl;
-
-    list<string> ils;
-    string stra;
-    while (cin >> stra)
-        ils.emplace_back(stra);
-    for (auto ip = ils.begin(); ip != ils.end(); ++ip)
-        cout << *ip << endl;
-
-    vector<Sales_data> c;
-    c.push_back(Sales_data("978-059",25,15.99));
-    cout << c[0].name << endl;
-    */
-
+int main() {
+    vector<int> ints;
+    cout << ints.at(0) << " " << ints[0] << " " << ints.front() << " " << *ints.begin() << endl;
 
 }
 
+
+
 /*
+    //9.24
+    vector<int> ints = {0,1,2,3};
+    cout << ints.at(0) << " " << ints[0] << " " << ints.front() << " " << *ints.begin() << endl;
+    空容器编译器不会报错但 终端会
+
+
+    //9.23
+    c容器数为一则:
+    val 值是 元素值;
+    val2 值是 元素值;
+    val3 这里last是未知变量;
+    val4 值是 元素值;
+
     //9.22
     //错误代码
     vector<int> iv;
