@@ -6,6 +6,7 @@
 #include <fstream>  //文件IO
 #include <sstream>  //strIO
 #include <list>     // 链表容器
+#include <forward_list> //单向链表
 #include <deque>    // 双向vector
 
 #include "Sales_data.h"
@@ -16,14 +17,216 @@ using namespace std;
 
 
 int main() {
-    vector<int> ints;
-    cout << ints.at(0) << " " << ints[0] << " " << ints.front() << " " << *ints.begin() << endl;
+    vector<string> svec;
+    svec.reserve(1024); //给容器设置的1024元素的内存
+    string word;
+    for (auto i = 0; i!=1000; ++i)
+        svec.push_back("a");
+    svec.resize(svec.size() + svec.size()/2);   //输入终止时扩大容器元素至1.5倍
 
+    cout << svec.capacity() << endl;
 }
 
 
 
 /*
+    //9.40
+    256元素后还是1024, 512也是 1000个是2000; 1048个时候时2048
+    //这个2000很好玩.是初始化的元素添加不会准寻2的谬次方定律吗?
+
+    //9.39
+        vector<string> svec;
+    svec.reserve(1024); //给容器设置的1024元素的内存
+    string word;
+    while (cin >> word)
+        svec.push_back(word);   //每有输入则保存到容器里;
+    svec.resize(svec.size() + svec.size()/2);   //输入终止时扩大容器元素至1.5倍
+
+
+
+    //9.38
+    0 - 1 - 2 -4 -8 -16 - 32-64-128
+
+
+    //9.37
+    array因为是固定数组他不需要capacity() 因为 分配的内存元素肯定和size()相等
+    而list 是双向链表; 它是分散内存链接在一起 压根不要重新分配
+
+
+    //9.36
+    不可能
+
+
+    //9.35
+    //capacity()是容器重新分配内存的最大元素数  size()是容器已有元素数
+    //就相当于一个是给10张纸, 一个是写了3张纸这种性质
+
+
+
+    //9.34
+    vector<int> vi = {0,1,2,3,4,5,6,7,8,9};
+    auto iter = vi.begin();
+    while (iter != vi.end()){
+        if (*iter % 2)  //奇数则:
+            iter = vi.insert(iter,*iter);//迭代器前添加元素 并移动指针到添加元素位置
+        ++iter; //遇到偶数死循环 因为 指针在循环中左侧添加元素 左移然后右移 等于一直左侧添加元素
+    }
+    for (auto &i : vi)
+        cout << i;
+
+
+    //9.33
+    vector<int> v = {0,1,2,3,4,5,6,7,8,9};
+    auto begin = v.begin();
+    while (begin != v.end()){
+        ++begin;
+        //这里会发生问题打比方 下行表达式移动到元素9 然后继续循环 接着移动到尾后 尾后添加元素这是错误的
+        v.insert(begin,42);
+        ++begin;
+    }
+    for (auto &i : v)
+        cout << i;
+
+
+    //9.32
+    *iter++ //说实话翻书前面部分有点烦. 而且参数到底调用前后修改这种事情很烦躁的..
+    //不合法. 因为他是 *(iter++) 而且是右结合 导致左参数 iter也污染
+    //表达式变成  把当前奇数给迭代器下一个位置可惜容器最后一个是9那么他的下一个是尾后不存在=, =
+    容器最后元素变成10就能过了
+    vector<int> vi = {0,1,2,3,4,5,6,7,8,9,10};
+    auto iter = vi.begin();
+    while (iter != vi.end()){
+        if (*iter % 2){ //奇数则
+            iter = vi.insert(iter,*iter++ ); //奇数位置前一个位置 添加 同样值 并移动迭代器
+            ++iter;  //移动两格
+            ++iter;
+        }else{
+            iter = vi.erase(iter);  //偶数删除当前元素 并跟新迭代器
+        }
+    }
+    for (auto &i : vi)
+        cout << i;
+
+
+    //9.31
+    因为list无法一次性移动两个位置;
+        list<int> vi = {0,1,2,3,4,5,6,7,8,9};
+    auto iter = vi.begin();
+    while (iter != vi.end()){
+        if (*iter % 2){ //奇数则
+            iter = vi.insert(iter,*iter); //奇数位置前一个位置 添加 同样值 并移动迭代器
+            ++iter;  //移动两格
+            ++iter;
+        }else{
+            iter = vi.erase(iter);  //偶数删除当前元素 并跟新迭代器
+        }
+    }
+    for (auto &i : vi)
+        cout << i;
+
+    //而forward_list复杂的多需要双迭代器 和 特殊函数;
+    forward_list<int> vi = {0,1,2,3,4,5,6,7,8,9};
+    auto iter = vi.begin(), ipa  = vi.before_begin();
+    while (iter != vi.end()){
+        if (*iter % 2){ //奇数则
+            iter = vi.insert_after(ipa,*iter); //奇数位置前一个位置 添加 同样值 并移动迭代器
+            ++iter;  //移动两格
+            ipa = iter;
+            ++iter;
+        }else{
+            iter = vi.erase_after(ipa);  //偶数删除当前元素 并跟新迭代器
+        }
+    }
+    for (auto &i : vi)
+        cout << i;
+
+
+
+    //9.30
+    限制有 如果需要初始化那么这个元素类型有初始化的默认值. 如果没有默认值则会戳五;
+
+
+    //9.29
+    会在vec的25个元素后面添加75个元素默认初始化;
+    vec.resize(10) 会会删除除前10个元素外所有元素;
+
+
+    //9.28
+void lala(forward_list<string> &fstrs, const string &stra,const string &strb){
+    int i = 0;
+    auto ipa = fstrs.before_begin(), ip = fstrs.begin();
+    while (ip != fstrs.end()){
+        if (*ip == stra){
+            ++i;
+            ip = fstrs.insert_after(ip, strb);
+        }else {
+            ipa = ip;
+            ++ip;
+        }
+    }
+    if (i == 0)
+        fstrs.insert_after(ipa, strb);
+}
+
+int main() {
+
+    forward_list<string> fl = {"aa","bb","cc","dd"};
+    lala(fl,"cc","dd");
+    for (auto &i : fl)
+        cout << i  << endl;
+}
+
+
+    //9.27
+    forward_list<int> flist = {0,1,2,3,4,5,6,7,8,9};
+    auto ipa = flist.before_begin();
+    auto ip = flist.begin();
+    while ( ip != flist.end()){
+        if (*ip % 2 == 1)
+            ip = flist.erase_after(ipa);
+        else{
+            ipa = ip;
+            ++ip;
+        }
+    }
+    for (auto i : flist)
+        cout << i;
+
+
+    //9.26
+    int ia[] = {0,1,1,2,3,5,8,13,21,55,89}; //array不支持迭代器
+    vector<int> ints;
+    list<int> lists;
+    for (auto &a: ia){
+        ints.push_back(a);
+        lists.push_back(a);
+    }
+
+    auto ip = ints.begin();
+    while (ip != ints.end())
+        if (*ip % 2 ==0)
+            ip = ints.erase(ip);
+        else
+            ++ip;
+
+    auto ipb = lists.begin();
+    while (ipb != lists.end())
+        if (*ipb % 2 ==1)
+            ipb = lists.erase(ipb);
+        else
+            ++ipb;
+
+
+    //9.25
+    elem1 == elem2 则什么都没删除
+    elem1和elem2都是尾后 也是什么都没删除;
+        vector<int> ints = {0,1,2,3};
+    ints.erase(ints.begin(), ints.begin());
+    cout << ints[0] << endl;
+
+
+
+
     //9.24
     vector<int> ints = {0,1,2,3};
     cout << ints.at(0) << " " << ints[0] << " " << ints.front() << " " << *ints.begin() << endl;

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1536421283 source:f:\data\github\work\c++ primer 第九章例题\main.cpp
+1536475007 source:f:\data\github\work\c++ primer 第九章例题\main.cpp
 	<iostream>
 	<string>
 	<cctype>
@@ -8,6 +8,7 @@
 	<fstream>
 	<sstream>
 	<list>
+	<forward_list>
 	<deque>
 	"Sales_data.h"
 
