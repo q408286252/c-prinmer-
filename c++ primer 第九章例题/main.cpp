@@ -8,28 +8,211 @@
 #include <list>     // 链表容器
 #include <forward_list> //单向链表
 #include <deque>    // 双向vector
+#include <array>
 
 #include "Sales_data.h"
 
 using namespace std;
-
-
-
+//bdfhikltgjpqy
+//acemnorsuvwxz
 
 int main() {
-    vector<string> svec;
-    svec.reserve(1024); //给容器设置的1024元素的内存
-    string word;
-    for (auto i = 0; i!=1000; ++i)
-        svec.push_back("a");
-    svec.resize(svec.size() + svec.size()/2);   //输入终止时扩大容器元素至1.5倍
 
-    cout << svec.capacity() << endl;
+
+    string s = "ataaaatatattaataa";
+    //cin >> s;
+    int i=0,ii=0;
+    string::size_type pos=0, posb, posbegin;
+    while ( (pos = s.find_first_of("acemnorsuvwxz",pos)) != string::npos ){
+        if (i ==0 ){ //第一次循环开始记录始;
+            posb = pos;
+            ++i;
+        } else if(posb + i == pos){ //如果下标连续则;
+            ++i;
+            if (i > ii){    //连续记录超过 历史纪录就跟新:
+                ii = i;
+                posbegin = posb;
+            }
+        } else{ //一旦不连续 则
+            if (i > ii) {   //和历史纪录对比如果大则
+                ii = i;   //连续次数赋予新值
+                posbegin = posb;    //并把起始终端保留下来
+                i = 1;
+                posb = pos;
+            } else{         //比历史纪录小则刷新初始值;
+                i = 1;
+                posb = pos;
+            }
+        }
+        ++pos;
+    }
+
+    for (int is = 0; is != ii; ++is)
+        cout << s[posbegin+is];
+    cout << s.length() << endl;
 }
 
 
 
 /*
+    //9.49    挺耗时间的..
+    //我看了下其他人的csdn写这例子有人写 s.length() 书上没写它从哪找到的 笑!!! 有人抄之前人写的. 有人写容器形式; 貌似这种纯if else的很受鄙视啊.
+    string s = "ataaaatatattaataa";
+    //cin >> s;
+    int i=0,ii=0;
+    string::size_type pos=0, posb, posbegin;
+    while ( (pos = s.find_first_of("acemnorsuvwxz",pos)) != string::npos ){
+        if (i ==0 ){ //第一次循环开始记录始;
+            posb = pos;
+            ++i;
+        } else if(posb + i == pos){ //如果下标连续则;
+            ++i;
+            if (i > ii){    //连续记录超过 历史纪录就跟新:
+                ii = i;
+                posbegin = posb;
+            }
+        } else{ //一旦不连续 则
+            if (i > ii) {   //和历史纪录对比如果大则
+                ii = i;   //连续次数赋予新值
+                posbegin = posb;    //并把起始终端保留下来
+                i = 1;
+                posb = pos;
+            } else{         //比历史纪录小则刷新初始值;
+                i = 1;
+                posb = pos;
+            }
+        }
+        ++pos;
+    }
+
+    for (int is = 0; is != ii; ++is)
+        cout << s[posbegin+is];
+
+
+
+    //9.48
+    string name = "r2d2" , numbers = "0123456789";
+    numbers.find(name); //返回string::npos成员 类型为const string::size_type 无符号类型;
+
+
+    //9.47
+    //啊啊啊啊find_first_not_of 这个写....的识别容器有点大.不想写= = 因该后面正则能快速解决.
+    string s = "ab2c3d7R4E6";
+    string::size_type pos=0;
+    while ( (pos = s.find_first_of("0123456789",pos)) != string::npos ){
+        cout << s[pos];
+        ++pos;
+    }
+    cout <<  endl;
+    pos = 0;
+    while ( (pos = s.find_first_of("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM",pos)) != string::npos ){
+        cout << s[pos];
+        ++pos;
+    }
+
+
+
+    //9.46
+    string &replacedef(string &s,const string &stra,const string &strb){
+    for (auto i = 0; i != s.size(); ++i){
+        string name = s.substr(i,4);
+        //cout << name << endl;
+        if (name == "yang"){
+            s.insert(i,stra);
+            s.insert(i+7,strb);
+            i+=3;
+        }
+    }
+    return s;
+}
+
+
+int main() {
+
+    string s = "and two yang three tho";
+    cout << replacedef(s,"Mr.","Jr.") << endl;
+}
+
+
+
+    //9.45
+    //事实证明用迭代器写很恶心 函数接受迭代器的方法和下标比少多了.
+string &replacedef(string &s,const string &stra,const string &strb){
+    for (auto i = s.begin(); i != s.end(); ++i){
+        char s1[] = {*i,*(i+1),*(i+2),*(i+3)};
+        string name(s1,4);
+        //auto *ip = &*i;  上两行可以换成
+        //string name(ip,4);
+        if (name == "yang"){
+            i = s.insert(i,stra.begin(),stra.end());
+            i += 7;
+            i = s.insert(i,strb.begin(),strb.end());
+        }
+    }
+    return s;
+}
+
+
+int main() {
+
+    string s = "and two yang three tho";
+    cout << replacedef(s,"Mr.","Jr.") << endl;
+}
+
+
+    //9.44
+    void replacedef(string &s,const string &oldVal,const string &newVal){
+
+    for (int i = 0; i != s.size(); ++i){
+        string stra = s.substr(i,i+3);
+        if (stra == oldVal){
+            s.replace(i,3,newVal);
+        }
+    }
+}
+int main() {
+
+    string s = "and two three tho";
+    replacedef(s,"tho","though");
+    cout << s << endl;
+}
+
+
+
+    //9.43
+void replacedef(string &s,const string &oldVal,const string &newVal){
+    //没留意写成下标形式了懒得改.
+    for (int i = 0; i != s.size(); ++i){
+        string stra = s.substr(i,i+3);
+        if (stra == oldVal){
+            s.erase(i,3);
+            s.insert(i,newVal);
+        }
+    }
+}
+int main() {
+
+    string s = "and two three tho";
+    replacedef(s,"tho","though");
+    cout << s << endl;
+}
+
+    //9.42
+    char c;
+    string stra;
+    while (cin >>c){
+        stra = stra + c;
+    }
+    cout << stra << endl;
+
+
+    //9.41
+    vector<char> css = {'h','e','l','l','o'};
+    auto *ip = &css[0];
+    string s(ip,5);
+    //我热我调了半天容器. 感觉不对 设定个指针就行了.........
+
+
     //9.40
     256元素后还是1024, 512也是 1000个是2000; 1048个时候时2048
     //这个2000很好玩.是初始化的元素添加不会准寻2的谬次方定律吗?
