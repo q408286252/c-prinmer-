@@ -5,56 +5,275 @@
 #include <cstring>  //提供C语言标准库的一些函数
 #include <fstream>  //文件IO
 #include <sstream>  //strIO
-#include <list>     // 链表容器
-#include <forward_list> //单向链表
-#include <deque>    // 双向vector
-#include <array>
+#include <list>     // 双链表 容器
+#include <forward_list> //单链表容器
+#include <deque>    // 双向vector容器
+#include <array>    //固定容器 array
+#include <stack>    //栈适配器stack
+#include <queue>    //队列适配器 包括: priority_queue 和 queue;
 
-#include "Sales_data.h"
+//#include "Sales_data.h"
 
 using namespace std;
-//bdfhikltgjpqy
-//acemnorsuvwxz
+/*
+    使用stack
+    发现( 开始纪录
+        之后看见) 一直弹出直到遇到( 然后把 包含括号内的 运算结果添加到 栈中,
+    之前的括号化的表达式 被运算结果替代;
 
-int main() {
+*/
 
 
-    string s = "ataaaatatattaataa";
-    //cin >> s;
-    int i=0,ii=0;
-    string::size_type pos=0, posb, posbegin;
-    while ( (pos = s.find_first_of("acemnorsuvwxz",pos)) != string::npos ){
-        if (i ==0 ){ //第一次循环开始记录始;
-            posb = pos;
-            ++i;
-        } else if(posb + i == pos){ //如果下标连续则;
-            ++i;
-            if (i > ii){    //连续记录超过 历史纪录就跟新:
-                ii = i;
-                posbegin = posb;
-            }
-        } else{ //一旦不连续 则
-            if (i > ii) {   //和历史纪录对比如果大则
-                ii = i;   //连续次数赋予新值
-                posbegin = posb;    //并把起始终端保留下来
-                i = 1;
-                posb = pos;
-            } else{         //比历史纪录小则刷新初始值;
-                i = 1;
-                posb = pos;
-            }
+
+class solving{
+public:
+    solving(string s){
+       dou = read(s);
+    }
+    double dou;
+
+    std::string str_str(string &stra){ //这里写如何把stra 转换成运算得到结果 strb;
+        //0123456789/*-+ .
+        std::string strb;
+        cout << stra << "\n";
+        double doua, doub, douz;
+        doua = stod(stra);
+        size_t i = stra.find_first_of("+-/*");      //找到运算符位置
+        i = stra.find_first_of("0123456789", i);   //找到运算符之后的数值位置
+        strb = stra.substr(i);
+        doub = stod(strb);
+        i = stra.find_first_of("+-/*");//找到运算符位置
+        switch(stra[i]){
+            case '+':
+                douz = doua + doub;
+                break;
+            case '-':
+                douz = doua - doub;
+                break;
+            case '*':
+                douz = doua * doub;
+                break;
+            case '/':
+                douz = doua / doub;
+                break;
         }
-        ++pos;
+        strb = to_string(douz);
+        cout << "doua" << doua << "\n" << "doub" << doub << "\n" << strb << "\n";
+        return strb;
     }
 
-    for (int is = 0; is != ii; ++is)
-        cout << s[posbegin+is];
-    cout << s.length() << endl;
+    double read (std::string &s){
+        stack<char> stackchar;
+        int ileft =0 , iright = 0;
+        std::string stra = "", strb;
+        for (char &i : s){
+            cout << i << "\n";
+            switch(i){
+                case '(':
+                    ++ileft;
+                    stackchar.push(i);
+                    break;
+                case ')':
+                    if (ileft == 0){        //之前没输入( 则
+                        cerr << "你的输入的表达式不正确!";
+                    }else{                  //之前输入了( 正常运行
+                        --ileft;
+                        for (char iii = stackchar.top(); iii != '('; iii = stackchar.top() ){
+                            stra.insert(0,1,iii);
+                            stackchar.pop();
+                        }
+                        stackchar.pop();    //删除'(';
+                        strb = str_str(stra);
+                        for (char &ib : strb)
+                            stackchar.push(ib);   //把结果添加进栈中;
+                        strb = "";
+                        stra = "";
+                    }
+                    break;
+                default:        //不是'('和')'则:
+                    stackchar.push(i);
+                    break;
+            }
+        }
+        size_t stackcharls = stackchar.size();
+        for (size_t ib = 0; ib != stackcharls; ++ib ){
+            stra.insert(0,1,stackchar.top());
+            stackchar.pop();
+        }
+        strb = str_str(stra);
+        return stod(strb);
+    }
+};
+
+int main(){
+    string s;
+    s = "(1+2)-(3*4)";
+    solving  solving1(s);
+    cout << solving1.dou << endl;
 }
 
 
 
 /*
+
+    //9.52 我热 这大概是目前看到的最烦人例题?  我就写括号两个值运算,没写三个值运算可以在里面添加添加添加很简单了.
+class solving{
+public:
+    solving(string s){
+       dou = read(s);
+    }
+    double dou;
+
+    std::string str_str(string &stra){ //这里写如何把stra 转换成运算得到结果 strb;
+        //0123456789/*-+ .
+        std::string strb;
+        cout << stra << "\n";
+        double doua, doub, douz;
+        doua = stod(stra);
+        size_t i = stra.find_first_of("+-/*");      //找到运算符位置
+        i = stra.find_first_of("0123456789", i);   //找到运算符之后的数值位置
+        strb = stra.substr(i);
+        doub = stod(strb);
+        i = stra.find_first_of("+-/*");//找到运算符位置
+        switch(stra[i]){
+            case '+':
+                douz = doua + doub;
+                break;
+            case '-':
+                douz = doua - doub;
+                break;
+            case '*':
+                douz = doua * doub;
+                break;
+            case '/':
+                douz = doua / doub;
+                break;
+        }
+        strb = to_string(douz);
+        cout << "doua" << doua << "\n" << "doub" << doub << "\n" << strb << "\n";
+        return strb;
+    }
+
+    double read (std::string &s){
+        stack<char> stackchar;
+        int ileft =0 , iright = 0;
+        std::string stra = "", strb;
+        for (char &i : s){
+            cout << i << "\n";
+            switch(i){
+                case '(':
+                    ++ileft;
+                    stackchar.push(i);
+                    break;
+                case ')':
+                    if (ileft == 0){        //之前没输入( 则
+                        cerr << "你的输入的表达式不正确!";
+                    }else{                  //之前输入了( 正常运行
+                        --ileft;
+                        for (char iii = stackchar.top(); iii != '('; iii = stackchar.top() ){
+                            stra.insert(0,1,iii);
+                            stackchar.pop();
+                        }
+                        stackchar.pop();    //删除'(';
+                        strb = str_str(stra);
+                        for (char &ib : strb)
+                            stackchar.push(ib);   //把结果添加进栈中;
+                        strb = "";
+                        stra = "";
+                    }
+                    break;
+                default:        //不是'('和')'则:
+                    stackchar.push(i);
+                    break;
+            }
+        }
+        size_t stackcharls = stackchar.size();
+        for (size_t ib = 0; ib != stackcharls; ++ib ){
+            stra.insert(0,1,stackchar.top());
+            stackchar.pop();
+        }
+        strb = str_str(stra);
+        return stod(strb);
+    }
+};
+
+int main(){
+    string s;
+    s = "(1+2)-(3*4)";
+    solving  solving1(s);
+    cout << solving1.dou << endl;
+}
+
+
+
+    //卧槽我头一次在这本书发现2个错误.p330 queue一会说可以用vector构造一会说不可以;
+    //一个删除写成返回..
+
+    //9.51
+class day{
+public:
+    day(std::string s ) { read(s);}
+    unsigned usn, usy, usr;
+    void read (const std::string s){
+        if (s.find_first_of("JFMASOND") >= 0) { //开头有字符的赋值方法
+            std::string stra = s.substr(0,3);
+            if (stra == "Jan"){
+                    usy = 1;}
+            else if ( stra == "Feb"){
+                    usy = 2;}
+            else if ( stra == "Mar"){
+                    usy = 3;}
+            else if ( stra == "Apr"){
+                    usy = 4;}
+            else if ( stra == "May"){
+                    usy = 5;}
+            else if ( stra == "Jun"){
+                    usy = 6;}
+            else if ( stra == "Jul"){
+                    usy = 7;}
+            else if ( stra == "Aug"){
+                    usy = 8;}
+            else if ( stra == "Sep"){
+                    usy = 9;}
+            else if ( stra == "Oct"){
+                    usy = 10;}
+            else if ( stra == "Nov"){
+                    usy = 11;}
+            else if ( stra == "Dec"){
+                    usy = 12;}
+
+            auto i = s.find_first_of("0123456789");     //识别日位置
+            usr = stoi(s.substr(i,i+2));
+            i = s.find_last_of("0123456789");    //识别年位置
+            usn = stoi(s.substr(i-3,i+1));
+        }else{          //开头没写符的赋值方法:
+            auto i = s.find_first_of("0123456789"); //识别月
+            usy = stoi(s.substr(i,i+2));
+            i = s.find_first_of("0123456789",i+2);
+            usr = stoi(s.substr(i,i+2));
+            i = s.find_last_of("0123456789");    //识别年位置
+            usn = stoi(s.substr(i-3,i+1));
+        }
+    }
+};
+
+int main() {
+    day i("10/10/1994");
+    //day i("Jan 10,1000");
+    cout << i.usn << " " << i.usy << " " << i.usr << endl;
+}
+
+
+    //9.50
+    vector<string> v_s = {"10","20","30"};
+    int i = 0;
+    for (auto ip = v_s.begin(); ip != v_s.end(); ++ip)
+        i += stoi(*ip);
+
+    cout << i << endl;
+
+
+
     //9.49    挺耗时间的..
     //我看了下其他人的csdn写这例子有人写 s.length() 书上没写它从哪找到的 笑!!! 有人抄之前人写的. 有人写容器形式; 貌似这种纯if else的很受鄙视啊.
     string s = "ataaaatatattaataa";

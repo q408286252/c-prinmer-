@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1536573762 source:f:\data\github\work\c++ primer 第九章例题\main.cpp
+1536774363 source:f:\data\github\work\c++ primer 第九章例题\main.cpp
 	<iostream>
 	<string>
 	<cctype>
@@ -11,7 +11,8 @@
 	<forward_list>
 	<deque>
 	<array>
-	"Sales_data.h"
+	<stack>
+	<queue>
 
 1536256733 f:\data\github\work\c++ primer 第九章例题\sales_data.h
 
