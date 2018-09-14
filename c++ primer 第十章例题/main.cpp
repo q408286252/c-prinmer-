@@ -18,15 +18,7 @@
 
 using namespace std;
 
-void elimDups(vector<string> &vec){
-    sort(vec.begin(), vec.end());
-    auto bega = unique(vec.begin(), vec.end());
-    vec.erase(bega, vec.end());
-}
 
-bool isShorter(const string &s1, const string &s2){
-    return s1.size()<s2.size();
-}
 
 bool compareIsbn (const Sales_data &la,const Sales_data &lb){
     return la.isbn() > lb.isbn();
@@ -37,28 +29,118 @@ bool rules (const string &stra){
     return stra.size() >= 5;
 }
 
+void elimDups(vector<string> &vec){
+    sort(vec.begin(), vec.end());//小到大排序
+    auto bega = unique(vec.begin(), vec.end()); //前不重复,返回重复头迭代器;
+    vec.erase(bega, vec.end());//删除之后的迭代器;
+}
+
+bool isShorter(const string &s1, const string &s2){
+    return s1.size()<s2.size();
+}
+
+void biggies(vector<string> &vec, vector<string>::size_type sz){
+    elimDups(vec);    //删重复
+    auto en = stable_partition(vec.begin(),vec.end(),
+                     [sz](const string &sa){ return sa.size() >=5;} );
+    for_each(vec.begin(), en,
+            [](const string &s){cout << s << " ";} );   //打印所有大于5字符的容器元素
+    cout << endl;
+}
+
+
 int main()
 {
-    vector<string> vecS = {"a","b","aaaaaaaa","bbbbbb","aaaa","c"};
-    auto en = partition(vecS.begin(),vecS.end(),rules);
-    for (auto ip = vecS.begin(); ip != en; ++ip)
+    /*
+    vector<string> words = {"a","b","aaaaaaaa","bbbbbb","aaaa","c","a","b"};
+    elimDups(words);
+    stable_sort(words.begin(), words.end(),
+                [](const string &sa, const string &sb){return sa.size()<sb.size();} );
+    for (const auto &s : words)
+        cout << s << endl;
+        */
+     /*
+    int a = 10;
+    auto f = [a](const int &ia){ return ia+a;};
+    cout << f(20) << endl;
+    */
+    vector<string> words = {"a","b","aaaaaaaa","bbbbbb","aaaa","c","a","b"};
+    biggies(words,5);
+
+    for (auto ip = words.begin(); ip != words.end(); ++ip)
         cout << *ip << endl;
 
-    /*
-    Sales_data la("aaa"),lb("bbb");
-    vector<Sales_data> vec = {la,lb};
-    stable_sort(vec.begin(), vec.end(), compareIsbn);
-
-    vector<string> vec = {"a","bb","ccc","a","bb","a"};
-    elimDups(vec);
-    stable_sort(vec.begin(), vec.end(), isShorter);
-    for (auto i : vec)
-        cout << i << endl;
-        */
 }
 
 
 /*
+//10.20
+
+
+
+//10.19
+void biggies(vector<string> &vec, vector<string>::size_type sz){
+    elimDups(vec);    //删重复
+    auto en = stable_partition(vec.begin(),vec.end(),
+                     [sz](const string &sa){ return sa.size() >=5;} );
+    for_each(vec.begin(), en,
+            [](const string &s){cout << s << " ";} );   //打印所有大于5字符的容器元素
+    cout << endl;
+}
+
+
+
+//10.18
+void biggies(vector<string> &vec, vector<string>::size_type sz){
+    elimDups(vec);    //删重复
+    stable_sort(vec.begin(), vec.end(),
+                [](const string &sa, const string &sb)
+                { return sa.size()<sb.size(); } ); //然后大小排序;
+    auto en = partition(vec.begin(), vec.end(),   //返回大于5字符的容器位置
+                    [sz](const string &a){ return a.size() >= sz;} );
+    for_each(vec.begin(), en,
+            [](const string &s){cout << s << " ";} );   //打印所有大于5字符的容器元素
+}
+
+
+//10.17
+    vector<string> words = {"a","b","aaaaaaaa","bbbbbb","aaaa","c","a","b"};
+    elimDups(words);
+    stable_sort(words.begin(), words.end(),
+                [](const string &sa, const string &sb){return sa.size()<sb.size();} );
+    for (const auto &s : words)
+        cout << s << endl;
+
+
+
+//10.16
+    void biggies(vector<string> &vec, vector<string>::size_type sz){
+    elimDups(vec);    //删重复
+    stable_sort(vec.begin(), vec.end(),
+                [](const string &sa, const string &sb)
+                { return sa.size()<sb.size(); } ); //然后大小排序;
+    auto beg = find_if(vec.begin(), vec.end(),   //返回大于5字符的容器位置
+                    [sz](const string &a){ return a.size() >= sz;} );
+    for_each(beg, vec.end(),
+            [](const string &s){cout << s << " ";} );   //打印所有大于5字符的容器元素
+}
+
+
+
+//10.15
+int main(){
+    int a = 10;
+    auto f = [a](const int &ia){ return ia+a;};
+    cout << f(20) << endl;
+}
+
+
+//10.14
+    auto f = [](const int &ia,const int &ib){ return ia+ib;};
+    cout << f(10,20) << endl;
+
+
+
 //10.13
 bool rules (const string &stra){
 
