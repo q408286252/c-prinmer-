@@ -12,13 +12,14 @@
 #include <stack>    //栈适配器stack
 #include <queue>    //队列适配器 包括: priority_queue 和 queue;
 #include <algorithm>    //大部分算法整合
-#include <iterator> //有back_inserter()函数
+#include <iterator> //有back_inserter()插入迭代器 流迭代器
+#include <functional>   //有bind函数;  ref(os) 返回一个特殊可拷贝对象   cref(os)返回特殊可拷贝const对象
 
 #include "Sales_data.h"
 
 using namespace std;
-
-
+using std::placeholders::_1;
+using std::placeholders::_2;
 
 bool compareIsbn (const Sales_data &la,const Sales_data &lb){
     return la.isbn() > lb.isbn();
@@ -38,7 +39,7 @@ void elimDups(vector<string> &vec){
 bool isShorter(const string &s1, const string &s2){
     return s1.size()<s2.size();
 }
-
+/*
 void biggies(vector<string> &vec, vector<string>::size_type sz){
     elimDups(vec);    //删重复
     auto en = stable_partition(vec.begin(),vec.end(),
@@ -48,33 +49,180 @@ void biggies(vector<string> &vec, vector<string>::size_type sz){
     cout << endl;
 }
 
+void biggies(vector<string> &vec, vector<string>::size_type sz){
+    elimDups(vec);    //删重复
+    stable_sort(vec.begin(), vec.end(),
+                bind(check_sizeb, _1, _2) ); //然后大小排序;
+    auto beg = find_if(vec.begin(), vec.end(),   //返回大于5字符的容器位置
+                    bind(check_size, _1 ,sz) );
+    for_each(beg, vec.end(),
+            [](const string &s){cout << s << " ";} );   //打印所有大于5字符的容器元素
+}
+*/
+bool check_sizeb(const string &sa, const string &sb){
+    return sa.size()<sb.size();
+}
 
-int main()
-{
-    /*
+bool check_size(const string &s, string::size_type sz){
+    return s.size() > sz;
+}
+void biggies(vector<string> &vec, vector<string>::size_type sz){
+    elimDups(vec);    //删重复
+    auto en = partition(vec.begin(), vec.end(),   //返回大于5字符的容器位置
+                    bind(check_size,_1,sz) );
+}
+
+int main(){
+    vector<int> vec = {1,2,3,4,5,6,7,8,9};
+    list<int> lst,lsta,lstb;
+    copy(vec.begin(),vec.end(),inserter(lst,lst.begin()));  //123456789
+    copy(vec.begin(),vec.end(),back_inserter(lsta));    //123456789
+    copy(vec.begin(),vec.end(),front_inserter(lstb));   //987654321
+    for (auto &i : lst)
+        cout << i;
+    for (auto &i : lsta)
+        cout << i;
+    for (auto &i : lstb)
+        cout << i;
+			/*
+    vector<string> words = {"a","b","aaaaaaaa","bbbbbb","aaaa","aaaaa","c","a","b"};
+    biggies(words, 5);
+
+
     vector<string> words = {"a","b","aaaaaaaa","bbbbbb","aaaa","c","a","b"};
     elimDups(words);
     stable_sort(words.begin(), words.end(),
                 [](const string &sa, const string &sb){return sa.size()<sb.size();} );
     for (const auto &s : words)
         cout << s << endl;
-        */
-     /*
+
     int a = 10;
     auto f = [a](const int &ia){ return ia+a;};
     cout << f(20) << endl;
-    */
+
+
     vector<string> words = {"a","b","aaaaaaaa","bbbbbb","aaaa","c","a","b"};
-    biggies(words,5);
 
     for (auto ip = words.begin(); ip != words.end(); ++ip)
         cout << *ip << endl;
 
+    int ia =10;
+    //auto f = [] {return 42;};
+    auto f = [&ia]() -> bool{if (ia>0) return --ia; else return 0; };
+    for (int i =0; i != 10; ++i){
+        cout << f() << endl;
+    }
+    */
 }
 
 
 /*
+//10.28
+    vector<int> vec = {1,2,3,4,5,6,7,8,9};
+    list<int> lst,lsta,lstb;
+    copy(vec.begin(),vec.end(),inserter(lst,lst.begin()));  //123456789
+    copy(vec.begin(),vec.end(),back_inserter(lsta));    //123456789
+    copy(vec.begin(),vec.end(),front_inserter(lstb));   //987654321
+
+
+
+//10.27
+    vector<string> vec = {"a","b","c","a"};
+    list<string> lst;
+    auto ip = unique(vec.begin(),vec.end());
+    unique_copy(vec.begin(),ip-1,back_inserter(lst) );
+    for (auto &i : lst)
+        cout << i;
+
+
+
+
+//10.26
+back_inserter 尾后插入 总是插入容器屁股后面;
+front_inserter 首部插入 总是把元素插入到容器前面;
+inserter    指定某位置 从这里到插入结束之后的位置
+
+
+
+//10.25         这题和10.22没啥区别
+void biggies(vector<string> &vec, vector<string>::size_type sz){
+    elimDups(vec);    //删重复
+    auto en = partition(vec.begin(), vec.end(),   //返回大于5字符的容器位置
+                    bind(check_size,_1,sz) );
+}
+
+int main(){
+    vector<string> words = {"a","b","aaaaaaaa","bbbbbb","aaaa","aaaaa","c","a","b"};
+    biggies(words, 5);
+}
+
+
+
+//10.24
+bool check_size(const string &s, string::size_type sz){
+    return s.size() > sz;
+}
+
+int main(){
+    vector<int> vec = {1,10,100,1000,10000,100000};
+    vector<string> vecs;
+    for (auto i : vec){
+        vecs.push_back( to_string(i));
+    }
+    string s = "aaa";
+    auto f = find_if(vecs.begin(),vecs.end(),bind(check_size, _1, s.size()) );
+    cout << *f << endl;
+}
+
+
+
+//10.23
+??? 我为什么要知道他能接受几个参数?;例子写过一个5参数的...正常情况会有十几个参数吗?
+using std::placeholders::_29; //到这里还支持. 也就是说默认不写的参数支持29个
+
+
+//10.22      感觉很糟糕. 属于重复使用的lambda
+bool check_size(const string &s, string::size_type sz){
+    return s.size() >= sz;
+}
+bool check_sizeb(const string &sa, const string &sb){
+    return sa.size()<sb.size();
+}
+
+void biggies(vector<string> &vec, vector<string>::size_type sz){
+    elimDups(vec);    //删重复
+    stable_sort(vec.begin(), vec.end(),
+                bind(check_sizeb, _1, _2) ); //然后大小排序;
+    auto beg = find_if(vec.begin(), vec.end(),   //返回大于5字符的容器位置
+                    bind(check_size, _1 ,sz) );
+    for_each(beg, vec.end(),
+            [](const string &s){cout << s << " ";} );   //打印所有大于5字符的容器元素
+}
+
+int main(){
+    vector<string> words = {"a","b","aaaaaaaa","bbbbbb","aaaa","aaaaa","c","a","b"};
+    biggies(words, 6);
+}
+
+
+//10.21
+    auto f = [&ia]() -> bool{if (ia>0) return --ia; else return 0; };
+    for (int i =0; i != 10; ++i){
+        cout << f() << endl;
+    }
+
+
 //10.20
+void biggies(vector<string> &vec, vector<string>::size_type sz){
+    elimDups(vec);    //删重复
+    auto ls = count_if(vec.begin(),vec.end(),
+                     [sz](const string &sa){ return sa.size() >6;} );
+    cout << ls <<  endl;
+}
+int main(){
+    vector<string> words = {"a","b","aaaaaaaa","bbbbbb","aaaa","c","a","b"};
+    biggies(words,6);
+}
 
 
 
