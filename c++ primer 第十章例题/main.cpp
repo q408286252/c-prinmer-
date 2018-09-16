@@ -87,10 +87,20 @@ void f(string s, string souta, string soutb){
 }
 
 int main(){
-    f("data.txt", "a.txt", "b.txt");
+    vector<int> vec= {0,1,2,3,4,5,6,7,8,9};
+    list<int> ls(vec.rbegin()+3, vec.rend()-2);
+    for (auto iter : ls )
+        cout << iter << endl;
+    //vector<string> line = {"a","a,b", ",", "b"};
+    //string line = "abcd,efgh";
+    //auto comma = find(line.crbegin(), line.crend(), ',' );	//必须comma时反向迭代器类型
+	//		cout << string(comma.base(), line.cend()) << endl;
 }
 
 /*
+for (auto r_iter = vec.crbegin(); r_iter != vec.crend(); ++r_iter)
+        cout << *r_iter << endl;
+
     ifstream input("data.txt");
     istream_iterator<Sales_item> in(input),en;
     vector<Sales_item> vecl(in,en);
@@ -234,6 +244,33 @@ int main(){
 
 
 /*
+//10.37
+    vector<int> vec= {0,1,2,3,4,5,6,7,8,9};
+    list<int> ls(vec.rbegin()+3, vec.rend()-2);
+    for (auto iter : ls )
+        cout << iter << endl;
+
+
+//10.36
+list<int> ls= {0,1,2,3,4,5,0,6};
+    auto iter = find(ls.crbegin(), ls.crend(), int(0));
+    cout << *iter << endl;
+
+
+//10.35
+vector<int> vec= {0,1,2,3,4,5,6};
+    for (auto riter = vec.cend()-1; riter != vec.cbegin()-1; --riter)
+        cout << *riter << endl;
+
+
+
+//10.34
+vector<int> vec= {0,1,2,3,4,5,6};
+    for (auto riter = vec.crbegin(); riter != vec.crend(); ++riter)
+        cout << *riter << endl;
+
+
+
 //10.33
 void f(string s, string souta, string soutb){
     ifstream input(s);
