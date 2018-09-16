@@ -12,10 +12,11 @@
 #include <stack>    //栈适配器stack
 #include <queue>    //队列适配器 包括: priority_queue 和 queue;
 #include <algorithm>    //大部分算法整合
-#include <iterator> //有back_inserter()插入迭代器 流迭代器
+#include <iterator> //各种迭代器  插入迭代器 流迭代器;方向迭代器;移动迭代器;
 #include <functional>   //有bind函数;  ref(os) 返回一个特殊可拷贝对象   cref(os)返回特殊可拷贝const对象
 
 #include "Sales_data.h"
+#include "Sales_item.h"
 
 using namespace std;
 using std::placeholders::_1;
@@ -72,7 +73,123 @@ void biggies(vector<string> &vec, vector<string>::size_type sz){
                     bind(check_size,_1,sz) );
 }
 
+void f(string s, string souta, string soutb){
+    ifstream input(s);
+    ofstream output(souta,ofstream::app), outputb(soutb,ofstream::app);
+    istream_iterator<int> in(input),en;
+    for(; in != en; ++in){
+        if ( *in %2 == 1){//奇数则:
+            output << *in << endl;
+        } else{
+            outputb << *in<< endl;
+        }
+    }
+}
+
 int main(){
+    f("data.txt", "a.txt", "b.txt");
+}
+
+/*
+    ifstream input("data.txt");
+    istream_iterator<Sales_item> in(input),en;
+    vector<Sales_item> vecl(in,en);
+    sort(vecl.begin(),vecl.end(),[](const Sales_item &lhs, const Sales_item &rhs)->bool{return lhs.isbn() == rhs.isbn();} );
+
+    //每个实例循环
+    for (auto iter = vecl.begin(); iter != vecl.end(); ++iter){
+        //找到此循环下一个到尾后 中同名的实例
+        auto ita = find_if(iter+1, vecl.end(), [iter](Sales_item &s){ return s.isbn()==iter->isbn(); });
+        //如果有则:
+        if (ita != vecl.end()){
+            //当前循环实例 和 找到实例的下个  初始为同名空;
+            cout << accumulate(iter, ita+1, Sales_item(iter->isbn())) << endl;
+            ++iter;
+        } else {
+            cout << *iter << endl;
+        }
+    }
+}
+
+    //auto iter = find(vecl.begin(),vecl.end(),sta);
+    //accumulate(vecl.begin(),vecl.end(), int(0));
+
+    /*
+        istream_iterator<Sales_item> in(input), eof;
+    vector<Sales_item> books;
+    while (in != eof)
+        books.push_back(*in++);
+    // cout << "Enter some lists of sales_item: " << endl;
+    // istream_iterator<Sales_item> in(cin), eof;
+    // vector<Sales_item> books(in, eof);     //another version
+
+    sort(books.begin(), books.end(), [](const Sales_item &lhs, const Sales_item &rhs)->bool{return lhs.isbn() == rhs.isbn();} );
+    for_each(books.cbegin(), books.cend(), [](const Sales_item &s) {cout << s << '\n'; });
+    cout << endl;
+
+    auto beg = books.begin(), end = books.begin();
+    while (beg != books.end()) {
+        end = find_if(beg, books.end(), [beg](Sales_item &s) {return s.isbn != beg->isbn; });
+        cout << accumulate(beg, end, Sales_item(beg->isbn)) << endl;
+        beg = end;
+    }
+
+    system("pause");
+    return 0;
+}
+    /*
+    istream_iterator<Sales_item> in(input),en;
+    vector<Sales_item> vecl(in,en);
+    sort(vecl.begin(),vecl.end(),[](const Sales_item &lhs, const Sales_item &rhs)->bool{return lhs.isbn() == rhs.isbn();} );
+    string sta = "asd"; //要查找的书
+    cout << accumulate(vecl.begin()->isbn, vecl.end()->isbn, Sales_item(vecl.begin()->isbn)) << endl;
+    //auto iter = find(vecl.begin(),vecl.end(),sta);
+    //accumulate(vecl.begin(),vecl.end(), int(0));
+
+    for (auto i :vecl)
+        cout << i << endl;
+    /*
+    find(vecl.begin(),vecl.end(),)
+    Sales_item new1 = *in++;
+    while (in != en){
+        if (new1.isbn() == in -> isbn() ){
+            new1 += *in++;
+        }else {
+            cout << new1 << endl;
+            new1 += *in++;
+       }
+    }
+    cout << new1 << endl;
+
+    /*
+    istream_iterator<int> in(cin), en;
+    ostream_iterator<int> out(cout, "\n");
+    vector<int> veci(in,en);
+    sort(veci.begin(),veci.end());
+    unique_copy(veci.begin(),veci.end(),out);
+
+    /*
+    for (auto i : vecs)
+        cout << i << endl;
+    /*
+    istream_iterator<Sales_item> item_iter(cin), eof;
+    ostream_iterator<Sales_item> out_iter(cout,"\n");
+    Sales_item sum = *item_iter++;  //第一个实例名叫sum 迭代器指向第二个;
+    while (item_iter != eof){ //第二个实例开始到尾指针终止
+        if (item_iter -> isbn() == sum.isbn() ) //第二个实例的isbn识别编号 如果等于第一个实例编号则:
+            sum += *item_iter++;//刷新sum所指实例;
+        else {
+            out_iter = sum; //输出是第一个实例;
+            sum = *item_iter++;//刷新sum所指实例;
+        }
+    }
+    out_iter = sum;
+
+    vector<int> vec = {1,2,3,4,5,6};
+    for (auto i : vec)
+        out = i;
+    cout << endl;
+
     vector<int> vec = {1,2,3,4,5,6,7,8,9};
     list<int> lst,lsta,lstb;
     copy(vec.begin(),vec.end(),inserter(lst,lst.begin()));  //123456789
@@ -84,7 +201,7 @@ int main(){
         cout << i;
     for (auto &i : lstb)
         cout << i;
-			/*
+
     vector<string> words = {"a","b","aaaaaaaa","bbbbbb","aaaa","aaaaa","c","a","b"};
     biggies(words, 5);
 
@@ -113,10 +230,80 @@ int main(){
         cout << f() << endl;
     }
     */
-}
+
 
 
 /*
+//10.33
+void f(string s, string souta, string soutb){
+    ifstream input(s);
+    ofstream output(souta,ofstream::app), outputb(soutb,ofstream::app);
+    istream_iterator<int> in(input),en;
+    for(; in != en; ++in){
+        if ( *in %2 == 1){//奇数则:
+            output << *in << endl;
+        } else{
+            outputb << *in<< endl;
+        }
+    }
+}
+
+int main(){
+    f("data.txt", "a.txt", "b.txt");
+}
+
+
+
+
+//10.32 为什么一定要使用find................... 还有网上答案很多都瞎几把写 跑不了.无语
+//真心恶心......... 花了2个小时?
+int main(){
+    ifstream input("data.txt");
+    istream_iterator<Sales_item> in(input),en;
+    vector<Sales_item> vecl(in,en);
+    sort(vecl.begin(),vecl.end(),[](const Sales_item &lhs, const Sales_item &rhs)->bool{return lhs.isbn() == rhs.isbn();} );
+
+    //每个实例循环
+    for (auto iter = vecl.begin(); iter != vecl.end(); ++iter){
+        //找到此循环下一个到尾后 中同名的实例
+        auto ita = find_if(iter+1, vecl.end(), [iter](Sales_item &s){ return s.isbn()==iter->isbn(); });
+        //如果有则:
+        if (ita != vecl.end()){
+            //当前循环实例 和 找到实例的下个  初始为同名空;
+            cout << accumulate(iter, ita+1, Sales_item(iter->isbn())) << endl;
+            ++iter;
+        } else {
+            cout << *iter << endl;
+        }
+    }
+}
+
+
+
+//10.31
+    istream_iterator<int> in(cin), en;
+    ostream_iterator<int> out(cout, "\n");
+    vector<int> veci(in,en);
+    sort(veci.begin(),veci.end());
+    unique_copy(veci.begin(),veci.end(),out);
+
+
+//10.30
+    istream_iterator<int> in(cin), en;
+    ostream_iterator<int> out(cout, "\n");
+    vector<int> veci(in,en);
+    sort(veci.begin(),veci.end());
+    copy(veci.begin(),veci.end(),out);
+
+
+
+//10.29
+    ifstream input("data.txt");
+    istream_iterator<string> in(input), en;
+    vector<string> vecs(in,en);
+
+
+
 //10.28
     vector<int> vec = {1,2,3,4,5,6,7,8,9};
     list<int> lst,lsta,lstb;

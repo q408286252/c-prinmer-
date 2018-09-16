@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1536909411 source:f:\data\github\work\c++ primer 第十章例题\main.cpp
+1537046777 source:f:\data\github\work\c++ primer 第十章例题\main.cpp
 	<iostream>
 	<string>
 	<cctype>
@@ -15,9 +15,15 @@
 	<queue>
 	<algorithm>
 	<iterator>
+	<functional>
 	"Sales_data.h"
+	"Sales_item.h"
 
 1535475154 f:\data\github\work\c++ primer 第十章例题\sales_data.h
+	<iostream>
+	<string>
+
+1537038480 f:\data\github\work\c++ primer 第十章例题\sales_item.h
 	<iostream>
 	<string>
 
