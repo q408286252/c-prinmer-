@@ -31,11 +31,6 @@ bool rules (const string &stra){
     return stra.size() >= 5;
 }
 
-void elimDups(vector<string> &vec){
-    sort(vec.begin(), vec.end());//小到大排序
-    auto bega = unique(vec.begin(), vec.end()); //前不重复,返回重复头迭代器;
-    vec.erase(bega, vec.end());//删除之后的迭代器;
-}
 
 bool isShorter(const string &s1, const string &s2){
     return s1.size()<s2.size();
@@ -67,11 +62,7 @@ bool check_sizeb(const string &sa, const string &sb){
 bool check_size(const string &s, string::size_type sz){
     return s.size() > sz;
 }
-void biggies(vector<string> &vec, vector<string>::size_type sz){
-    elimDups(vec);    //删重复
-    auto en = partition(vec.begin(), vec.end(),   //返回大于5字符的容器位置
-                    bind(check_size,_1,sz) );
-}
+
 
 void f(string s, string souta, string soutb){
     ifstream input(s);
@@ -86,164 +77,70 @@ void f(string s, string souta, string soutb){
     }
 }
 
+void elimDups(list<string> &lst){
+    lst.sort();//小到大排序
+    lst.unique();
+}
+
 int main(){
-    vector<int> vec= {0,1,2,3,4,5,6,7,8,9};
-    list<int> ls(vec.rbegin()+3, vec.rend()-2);
-    for (auto iter : ls )
+    list<string> lst = {"a","b","a","b","c","a"};
+    elimDups(lst);
+    for (auto iter : lst )
         cout << iter << endl;
-    //vector<string> line = {"a","a,b", ",", "b"};
-    //string line = "abcd,efgh";
-    //auto comma = find(line.crbegin(), line.crend(), ',' );	//必须comma时反向迭代器类型
-	//		cout << string(comma.base(), line.cend()) << endl;
+
 }
 
-/*
-for (auto r_iter = vec.crbegin(); r_iter != vec.crend(); ++r_iter)
-        cout << *r_iter << endl;
-
-    ifstream input("data.txt");
-    istream_iterator<Sales_item> in(input),en;
-    vector<Sales_item> vecl(in,en);
-    sort(vecl.begin(),vecl.end(),[](const Sales_item &lhs, const Sales_item &rhs)->bool{return lhs.isbn() == rhs.isbn();} );
-
-    //每个实例循环
-    for (auto iter = vecl.begin(); iter != vecl.end(); ++iter){
-        //找到此循环下一个到尾后 中同名的实例
-        auto ita = find_if(iter+1, vecl.end(), [iter](Sales_item &s){ return s.isbn()==iter->isbn(); });
-        //如果有则:
-        if (ita != vecl.end()){
-            //当前循环实例 和 找到实例的下个  初始为同名空;
-            cout << accumulate(iter, ita+1, Sales_item(iter->isbn())) << endl;
-            ++iter;
-        } else {
-            cout << *iter << endl;
-        }
-    }
-}
-
-    //auto iter = find(vecl.begin(),vecl.end(),sta);
-    //accumulate(vecl.begin(),vecl.end(), int(0));
-
-    /*
-        istream_iterator<Sales_item> in(input), eof;
-    vector<Sales_item> books;
-    while (in != eof)
-        books.push_back(*in++);
-    // cout << "Enter some lists of sales_item: " << endl;
-    // istream_iterator<Sales_item> in(cin), eof;
-    // vector<Sales_item> books(in, eof);     //another version
-
-    sort(books.begin(), books.end(), [](const Sales_item &lhs, const Sales_item &rhs)->bool{return lhs.isbn() == rhs.isbn();} );
-    for_each(books.cbegin(), books.cend(), [](const Sales_item &s) {cout << s << '\n'; });
-    cout << endl;
-
-    auto beg = books.begin(), end = books.begin();
-    while (beg != books.end()) {
-        end = find_if(beg, books.end(), [beg](Sales_item &s) {return s.isbn != beg->isbn; });
-        cout << accumulate(beg, end, Sales_item(beg->isbn)) << endl;
-        beg = end;
-    }
-
-    system("pause");
-    return 0;
-}
-    /*
-    istream_iterator<Sales_item> in(input),en;
-    vector<Sales_item> vecl(in,en);
-    sort(vecl.begin(),vecl.end(),[](const Sales_item &lhs, const Sales_item &rhs)->bool{return lhs.isbn() == rhs.isbn();} );
-    string sta = "asd"; //要查找的书
-    cout << accumulate(vecl.begin()->isbn, vecl.end()->isbn, Sales_item(vecl.begin()->isbn)) << endl;
-    //auto iter = find(vecl.begin(),vecl.end(),sta);
-    //accumulate(vecl.begin(),vecl.end(), int(0));
-
-    for (auto i :vecl)
-        cout << i << endl;
-    /*
-    find(vecl.begin(),vecl.end(),)
-    Sales_item new1 = *in++;
-    while (in != en){
-        if (new1.isbn() == in -> isbn() ){
-            new1 += *in++;
-        }else {
-            cout << new1 << endl;
-            new1 += *in++;
-       }
-    }
-    cout << new1 << endl;
-
-    /*
-    istream_iterator<int> in(cin), en;
-    ostream_iterator<int> out(cout, "\n");
-    vector<int> veci(in,en);
-    sort(veci.begin(),veci.end());
-    unique_copy(veci.begin(),veci.end(),out);
-
-    /*
-    for (auto i : vecs)
-        cout << i << endl;
-    /*
-    istream_iterator<Sales_item> item_iter(cin), eof;
-    ostream_iterator<Sales_item> out_iter(cout,"\n");
-    Sales_item sum = *item_iter++;  //第一个实例名叫sum 迭代器指向第二个;
-    while (item_iter != eof){ //第二个实例开始到尾指针终止
-        if (item_iter -> isbn() == sum.isbn() ) //第二个实例的isbn识别编号 如果等于第一个实例编号则:
-            sum += *item_iter++;//刷新sum所指实例;
-        else {
-            out_iter = sum; //输出是第一个实例;
-            sum = *item_iter++;//刷新sum所指实例;
-        }
-    }
-    out_iter = sum;
-
-    vector<int> vec = {1,2,3,4,5,6};
-    for (auto i : vec)
-        out = i;
-    cout << endl;
-
-    vector<int> vec = {1,2,3,4,5,6,7,8,9};
-    list<int> lst,lsta,lstb;
-    copy(vec.begin(),vec.end(),inserter(lst,lst.begin()));  //123456789
-    copy(vec.begin(),vec.end(),back_inserter(lsta));    //123456789
-    copy(vec.begin(),vec.end(),front_inserter(lstb));   //987654321
-    for (auto &i : lst)
-        cout << i;
-    for (auto &i : lsta)
-        cout << i;
-    for (auto &i : lstb)
-        cout << i;
-
-    vector<string> words = {"a","b","aaaaaaaa","bbbbbb","aaaa","aaaaa","c","a","b"};
-    biggies(words, 5);
-
-
-    vector<string> words = {"a","b","aaaaaaaa","bbbbbb","aaaa","c","a","b"};
-    elimDups(words);
-    stable_sort(words.begin(), words.end(),
-                [](const string &sa, const string &sb){return sa.size()<sb.size();} );
-    for (const auto &s : words)
-        cout << s << endl;
-
-    int a = 10;
-    auto f = [a](const int &ia){ return ia+a;};
-    cout << f(20) << endl;
-
-
-    vector<string> words = {"a","b","aaaaaaaa","bbbbbb","aaaa","c","a","b"};
-
-    for (auto ip = words.begin(); ip != words.end(); ++ip)
-        cout << *ip << endl;
-
-    int ia =10;
-    //auto f = [] {return 42;};
-    auto f = [&ia]() -> bool{if (ia>0) return --ia; else return 0; };
-    for (int i =0; i != 10; ++i){
-        cout << f() << endl;
-    }
-    */
 
 
 
 /*
+//10.42
+void elimDups(list<string> &lst){
+    lst.sort();//小到大排序
+    lst.unique();
+}
+
+int main(){
+    list<string> lst = {"a","b","a","b","c","a"};
+    elimDups(lst);
+    for (auto iter : lst )
+        cout << iter << endl;
+
+}
+
+
+
+
+//10.41
+    replace(beg, end, old_val, new_val);    //替换范围迭代器元素里 old_val值的元素替换成 new_val;
+    replace_if(beg, end, pred, new_val);//替换 pred给出true的元素 替换成new_val;
+    replace_copy(beg, end, dest, old_val, new_val); //替换范围迭代器元素里 old_val值的元素替换成 new_val; 并把所有新值插入到迭代器例,原容器不变
+    replace_copy_if(beg, end, dest, pred, new_val);//替换pred给出true的元素替换成new_val,并把所有新值插入到迭代器例,原容器不变并且
+
+
+
+
+//10.40
+    copy要求 第一第二参数最少是输入迭代器; 第三参数最少是输出迭代器;
+    reverse 逆向要求 最少双向迭代器:
+    unique 最少单向迭代器:
+
+
+//10.39
+    list 是双向迭代器:
+    vector是随机访问迭代器
+
+
+
+//10.38
+    输入迭代器   读;++;单遍
+    输出迭代器   写;++;单遍
+    向前迭代器   读写;++,列表元素重复读写;
+    双向迭代器   读写;++;--;列表元素重复读写;
+    随机访问迭代器     读写;++;--;计算迭代器距离;迭代器大小比较;迭代器指针+ -移动运算; 下标;
+
+
+
 //10.37
     vector<int> vec= {0,1,2,3,4,5,6,7,8,9};
     list<int> ls(vec.rbegin()+3, vec.rend()-2);
