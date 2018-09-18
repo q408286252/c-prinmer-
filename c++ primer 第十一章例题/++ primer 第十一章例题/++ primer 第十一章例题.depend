@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1537211000 source:f:\data\github\work\c++ primer 第十一章例题\++ primer 第十一章例题\main.cpp
+	<iostream>
+	<string>
+	<cctype>
+	<vector>
+	<cstring>
+	<fstream>
+	<sstream>
+	<list>
+	<forward_list>
+	<deque>
+	<array>
+	<stack>
+	<queue>
+	<algorithm>
+	<iterator>
+	<functional>
+	<map>
+	<set>
+	<unordered_map>
+	<unordered_set>
+	"Sales_data.h"
+	"Sales_item.h"
+
+1535475154 f:\data\github\work\c++ primer 第十一章例题\++ primer 第十一章例题\sales_data.h
+	<iostream>
+	<string>
+
+1537038480 f:\data\github\work\c++ primer 第十一章例题\++ primer 第十一章例题\sales_item.h
+	<iostream>
+	<string>
+
