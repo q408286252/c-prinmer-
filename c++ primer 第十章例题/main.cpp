@@ -83,10 +83,18 @@ void elimDups(list<string> &lst){
 }
 
 int main(){
-    list<string> lst = {"a","b","a","b","c","a"};
-    elimDups(lst);
-    for (auto iter : lst )
-        cout << iter << endl;
+    vector<string> lst = {"a","b","a","a","c","a"};
+    list<vector<string>> ls = {lst,lst,lst,lst};
+    for (auto i = ls.begin(); i != ls.end(); ++i){
+        auto ia = count(i->begin(),i->end(), "a");
+        cout<< ia << endl;
+    }
+    //for (auto iter = lst.begin(); iter != lst.end();++iter ){
+    //    auto i = find(lst.begin(), iter, string("c") );
+    //    cout << *i << endl;
+        //if ( *(lst.end()) == *i ) {
+        //    cout << "ÔËĞĞÁË" << endl;
+        //}
 
 }
 
