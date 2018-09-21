@@ -36,6 +36,8 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="data.txt" />
+		<Unit filename="data1.txt" />
+		<Unit filename="data2.txt" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

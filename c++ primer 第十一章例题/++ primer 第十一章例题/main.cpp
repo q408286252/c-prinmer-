@@ -18,20 +18,43 @@
 #include <set>  //关键字容器
 #include <unordered_map>    //无序对应值容器
 #include <unordered_set>    //无序关键字容器
+#include <cxxabi.h>         //用typeid(变量名).name() 时用到的帮助gcc显示完整类型
+#include <utility>          //使用pair一对变量类型
 
 #include "Sales_data.h"
-#include "Sales_item.h"
+//#include "Sales_item.h"
 
 using namespace std;
 
+bool compareIsbn(const Sales_data &lhs, const Sales_data &rhs){
+    return lhs.isbn() < rhs.isbn();
+}
+pair<string, int>  process(vector<string> &v){
+    if(!v.empty())  //v为空则
+        //return {v.back(),v.back().size()};
+        return pair<string,int>(v.back(),v.back().size());
+    else
+        return pair<string,int>();  //空返回
+}
+
 int main()
 {
+
+    //for (auto i : v)
+     //   cout << i << endl;
+    //cout << typeid( i ).name() <<endl;
+    //Sales_data la("50"), lb("60");
+    using f = bool(Sales_data const&, Sales_data const&);
+    multiset<Sales_data,f* > bookstore(compareIsbn);
+    multiset<Sales_data,f*>::iterator i = bookstore.begin();
+    /*
     vector<int> vec = {0,1,2,3,4,5,6,1,2,3};
     sort(vec.begin(),vec.end());
     auto iter = unique(vec.begin(),vec.end());
     vec.erase(iter, vec.end());
     for (auto i : vec)
         cout << i << endl;
+        */
 }
     /*
     map<string, size_t> word_count;
@@ -47,6 +70,87 @@ int main()
 
 
 /*
+
+//11.19
+    using f = bool(Sales_data const&, Sales_data const&);
+    multiset<Sales_data,f* > bookstore(compareIsbn);
+    multiset<Sales_data,f*>::iterator i = bookstore.begin();
+
+
+
+//11.18
+    map<string,string> mapa = { {"1","11"},{"2","22"} };\
+    for (map<string,string>::iterator it = mapa.begin(); it != mapa.end();++it)
+        cout << it->first << " " << it->second << endl;
+
+
+
+//11.17
+    copy(v.begin(), v.end(), inserter(c,c.end()));//v的全部元素插入到 c容器c.end()开始位置 c时set集合会自动排序
+    copy(v.begin(), v.end(), back_inserter(c));//不合法 因为c这set集合不支持push_back;
+    copy(c.begin(), c.end(), inserter(v,v.end()));//吧c元素按顺序 插入到v的队尾
+    copy(c.begin(), c.end(), back_inserter(v));//和上行一样
+
+
+
+//11.16
+    map<int, vector<int>> mapa ={ {1,{1,2,3}},{2,{1,2,3} } };
+    auto map_iter = mapa.begin();
+    int i = map_iter->second[2];
+    cout << i <<endl;
+
+
+
+//11.15
+    key_type 和 value_type 时一格意思就是关键字类型
+    mapped_tyep 为关键字关联值 的类型
+
+
+
+//11.14
+        map<string, vector<pair<string,string>>> mapa= {
+            {"yang",    {  {"rui","09-11"},{"niu","09-12"}  }     }
+            };
+
+
+
+//11.13
+        vec.push_back({*in++,*ini++});
+        vec.push_back(pair<string,int>(*in++,*ini++));
+        vec.push_back(make_pair(*in++,*ini++));
+
+
+
+
+//11.12
+    ifstream input("data1.txt");	//读取文件流
+    ifstream inputb("data2.txt");
+	istream_iterator<string> in(input), en; //in和读取文件流绑定
+	istream_iterator<int>ini(inputb),eni;
+    vector<pair<string,int>> vec;
+	while(in != en && ini != eni)
+        vec.push_back({*in++,*ini++});
+    for (auto i : vec)
+        cout<< i.first << i.second << endl;
+
+
+
+//11.11
+    using f = bool(Sales_data const&, Sales_data const&);
+    multiset<Sales_data,f* > bookstore(compareIsbn);
+    //我写bool(Sales_data const&, Sales_data const&)* 死活不对- -只好查了下
+
+
+//11.10
+    map<vector<int>::iterator,int> mapa;
+    map<list<int>::iterator,int> mapa;
+    //测试了能
+
+//11.9
+    map<string,list<int>> mapa;
+
+
+
 //11.8
     vector<int> vec = {0,1,2,3,4,5,6,1,2,3};
     sort(vec.begin(),vec.end());
