@@ -39,37 +39,56 @@ pair<string, int>  process(vector<string> &v){
 
 int main()
 {
-
-    //for (auto i : v)
-     //   cout << i << endl;
-    //cout << typeid( i ).name() <<endl;
-    //Sales_data la("50"), lb("60");
-    using f = bool(Sales_data const&, Sales_data const&);
-    multiset<Sales_data,f* > bookstore(compareIsbn);
-    multiset<Sales_data,f*>::iterator i = bookstore.begin();
-    /*
-    vector<int> vec = {0,1,2,3,4,5,6,1,2,3};
-    sort(vec.begin(),vec.end());
-    auto iter = unique(vec.begin(),vec.end());
-    vec.erase(iter, vec.end());
-    for (auto i : vec)
-        cout << i << endl;
-        */
+    int a = 4;
+    const int *x = &a, shit = 5;
+    int const xa = 4, shit2 = 6;
+    shit2 = 5;
 }
-    /*
-    map<string, size_t> word_count;
-    set<string> exclude =  {"111","222","333"};
-    string word;
-    while (cin>> word)
-        //变成只统计111 222 333之外的string次数
-        if (exclude.find(word) == exclude.end() )   //在关键字容器查找同名关键字 如果空迭代器则:
-            ++word_count[word];
-    for (const auto &w : word_count)
-        cout << w.first << "拉" << w.second << ((w.second > 1) ? "times" : "time" ) << endl;
-    */
 
 
 /*
+//11.23
+    multimap<string, string> family;
+    vector<string> vec;
+    string  surname,name;
+    cout << "如果输入完毕要输入下一个姓则输入y" << endl;
+    i:
+    while(cin >> surname){
+        while(cin>> name){
+            if (name == "y"|| name == "Y")
+                goto i;
+            family.insert({surname,name});
+        }
+    }
+    for (auto &i : family)
+        cout << "姓名为:" << i.first << i.second  << endl;
+
+
+
+//11.22
+    map<string, vector<int>> word_count;
+    pair<string,vector<int>> paira = {"s",{1}};
+    pair<map<string,vector<int>>::iterator, bool> set = word_count.insert(paira);
+
+
+
+//11.21
+    默认添加 word的字符 和0关联值 他们的返回pair找到第一成员first 这迭代器里的第二成员seond递增;
+
+
+
+//11.20
+    map<string, size_t> word_count;
+    string s;
+    while(cin >> s){
+        auto ret = word_count.insert({s,1});
+        if (!ret.second)    //pair的bool != 0
+			++ret.first->second;
+    }
+    for (auto &i : word_count)
+        cout << "出现" << i.first << "的次数为:" << i.second << endl;
+    //不方便理解 特别第一值迭代器里的 第二元素 有点绕人
+
 
 //11.19
     using f = bool(Sales_data const&, Sales_data const&);
@@ -161,7 +180,7 @@ int main()
     //优点很明显 我这里要写4行命令 而set一行就行 而且vector的元素内容如果多了.删除重复将非常慢.
 
 
-//11.7      //这破书没写怎么增加map元素.... 就要我写添加元素...
+//11.7      //这破书没写怎么添加 关联值不是数字的map集合.... 就要我写添加元素... 看了网上例题写push_back().....这题算我写错把.
     map<string, vector<string>> demo= {{"yang",{"rui","niu"} },{"yu",{"rui","niu"} } };
     demo.insert({"nana",{"ni","hao"}});
 
