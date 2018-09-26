@@ -39,14 +39,113 @@ pair<string, int>  process(vector<string> &v){
 
 int main()
 {
-    int a = 4;
-    const int *x = &a, shit = 5;
-    int const xa = 4, shit2 = 6;
-    shit2 = 5;
+
+    multimap<string,string > mapa;
+    ifstream in("data.txt");
+    string s,s1,s2;
+    int i = 0;
+    while (in){
+        in >> s;
+        if (i % 2 == 0){
+            s1 = s;
+        } else{
+            s2 = s;
+            mapa.insert({s1,s2});
+        }
+        ++i;
+    }
+
+    for (auto i : mapa)
+        cout << i.first << endl;
 }
 
 
 /*
+//11.32
+    multimap<string,string > mapa;
+    ifstream in("data.txt");
+    string s,s1,s2;
+    int i = 0;
+    while (in){
+        in >> s;
+        if (i % 2 == 0){
+            s1 = s;
+        } else{
+            s2 = s;
+            mapa.insert({s1,s2});
+        }
+        ++i;
+    }
+
+    //for (auto i : mapa)
+    //    cout << i.first << endl;
+
+
+
+
+//11.31
+    multimap<string,string > mapa = { {"a","aaaaa"}, {"a","aa"}, {"c","cccc"} };
+    string s = "a";
+    i:
+    if (mapa.find(s) != mapa.end()){
+        auto iter = mapa.find(s);
+        mapa.erase(iter);
+    }
+    if ( mapa.find(s) != mapa.end() )
+        goto i;
+    for (auto ii : mapa)
+        cout << ii.first << endl;
+
+
+//11.30
+    pos.first->second
+    //pos 是pair;
+    //pos.first 是找pair的第一个元素也就是找到第一个大于等于search_item值的迭代器;
+    //pos.first->second 是迭代器引用然后找第二元素 也就是关联值的内容
+
+
+
+//11.29
+    upper_bound 指向大于关键字的迭代器; 没有则end();
+    lower_bound 指向大于关键字的迭代器; 没有则end();
+    equal_range 的pair 两元素分别指向 指向相同大于关键字的迭代器; 没有则end();
+
+
+//11.28
+    map<string,vector<int> > mapa = { {"a",{0,1,2,3}}, {"c",{4,5,6,7}} };
+    pair<string, vector<int>> paira = {"",{0} };
+    paira = *mapa.find("a");
+
+
+
+//11.27
+    count 用来解决 重复map 和set时使用
+    find在不重复的 map和set时候使用,
+
+
+
+//11.26
+    //可以用关联值类型相同的值进行操作;
+    //下标返回类型为 下标关键字的关联值 关联值类型由map定义;
+    map<string,int> mapa;
+    mapa["a"] = 1;
+    mapa["a"] += 5;
+    cout << mapa["a"] <<endl;
+
+
+
+//11.25
+    vector<int> v;
+    v[0] = 1;   //这行属于未定义;
+    //可以看出vector 和map差别很大
+
+
+//11.24
+    map<int,int> m;
+    m[0] = 1;   //添加关键字0 其关联值初始化并赋值1
+
+
+
 //11.23
     multimap<string, string> family;
     vector<string> vec;

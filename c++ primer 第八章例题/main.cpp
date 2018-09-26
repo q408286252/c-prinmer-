@@ -181,7 +181,7 @@ struct Sales_data{
     //8.5
     ifstream in("data.txt");
     vector<string> strs;
-    if (in){
+    while (in){
         for(string stra;in >> stra;)
             strs.push_back(stra);
     }
