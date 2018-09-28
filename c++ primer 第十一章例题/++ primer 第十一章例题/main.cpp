@@ -20,26 +20,40 @@
 #include <unordered_set>    //无序关键字容器
 #include <cxxabi.h>         //用typeid(变量名).name() 时用到的帮助gcc显示完整类型
 #include <utility>          //使用pair一对变量类型
+#include <ctime>            //c的程序计时软件
+
+#define MAX 100
 
 #include "Sales_data.h"
 //#include "Sales_item.h"
 
 using namespace std;
 
-bool compareIsbn(const Sales_data &lhs, const Sales_data &rhs){
-    return lhs.isbn() < rhs.isbn();
-}
-pair<string, int>  process(vector<string> &v){
-    if(!v.empty())  //v为空则
-        //return {v.back(),v.back().size()};
-        return pair<string,int>(v.back(),v.back().size());
-    else
-        return pair<string,int>();  //空返回
+int method (vector<int> List, int X){
+    int i = List.size()/2, low = 0, high = List.size();
+    for (; List[i] != X;){
+        if (List[i] < X){
+            low = i;
+            i = i + (high-i+1)/2;
+        }
+        else{
+            high = i;
+            i = i - (i-low+1)/2;
+        }
+    }
+    return i;
 }
 
 int main()
 {
+    vector<int> vec = {0,1,2,3,4,5,6,7,8,9,10,11,12,13};
+    cout << vec[method(vec,4)] << endl;
+    //method()
 
+
+}
+
+/*
     multimap<string,string > mapa;
     ifstream in("data.txt");
     string s,s1,s2;
@@ -57,7 +71,8 @@ int main()
 
     for (auto i : mapa)
         cout << i.first << endl;
-}
+        */
+
 
 
 /*
