@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1541863506 source:f:\data\github\work\c++ primer µÚÊ®ÁùÕÂÀıÌâ\main.cpp
+	<iostream>
+	<string>
+	<cctype>
+	<vector>
+	<cstring>
+	<fstream>
+	<sstream>
+	<list>
+	<forward_list>
+	<deque>
+	<array>
+	<stack>
+	<queue>
+	<algorithm>
+	<iterator>
+	<functional>
+	<map>
+	<set>
+	<unordered_map>
+	<unordered_set>
+	<cxxabi.h>
+	<utility>
+	<ctime>
+	<memory>
+

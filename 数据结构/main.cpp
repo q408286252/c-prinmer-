@@ -1,42 +1,31 @@
 #include <iostream>
 #include <vector>
+#include <iomanip>
 
 using namespace std;
 
-void maxsum (vector<int> a, int n){
-    int newmax =0, oldmax =-1, oldlow, low =0, high = 0;
-    for (int i=0; i <= n-1; ++i){
-        newmax += a[i];
-        if ( newmax > oldmax){
-            oldlow = a[i-low];
-            ++low;
-            cout << oldlow << "\n";
-            high = a[i];
-            oldmax = newmax;
-        } else if ( newmax < 0){
-            low = 0;
-            newmax = 0;
-        } else
-            ++low;
-    }
-    if (oldmax == -1 ){
-        low = a[0];
-        high = a[n-1];
-        oldmax = 0;
-    }
-    cout << oldmax << ' ' << oldlow << ' ' << high;
-}
+#define pi 3.14159
 
+class base{
+private:
+    int x,y;
+    static int aa;
+public:
+    base(int i,int j){x=i; y=j;}
+    void get(){cout<<x << y;}
+    void a(){cout << aa;};
+};
+
+int base::aa = 50;
 int main(){
-    int n;
-    cin >> n;
-    vector<int> a;
-    int i;
-    for (int l=1; l <= n; ++l){
-        cin >> i;
-        a.push_back(i);
+    int b =21,m=0;
+    switch (int(1)){
+        case 0: m++; break;
+        case 1: m++;
+                switch(b%3){
+                    case 0:m;
+                    case 1:m++;break;
+                }
     }
-    maxsum(a,n);
+    cout << m << endl;
 }
-
-

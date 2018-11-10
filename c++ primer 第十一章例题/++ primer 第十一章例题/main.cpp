@@ -21,6 +21,7 @@
 #include <cxxabi.h>         //用typeid(变量名).name() 时用到的帮助gcc显示完整类型
 #include <utility>          //使用pair一对变量类型
 #include <ctime>            //c的程序计时软件
+#include <memory>           //智能指针
 
 #define MAX 100
 
@@ -43,15 +44,92 @@ int method (vector<int> List, int X){
     }
     return i;
 }
+//传入转换规则文件生成 转换规则字典.
+map<string,string> buildMap(ifstream &map_file){
+    map<string,string> trans_map;
+    string key;
+    string value;
+    while (map_file >> key && getline(map_file,value)){
+        if (value.size() > 1)
+            //第一个单词为关键字; 第二个带空格关联值
+            trans_map[key] = value.substr(1);
+        else
+            throw runtime_error("no rule for" + key);
+    }
+    return trans_map;
+}
+//匹配函数
+const string & transform(const string &s, const map<string,string> &m){
+    //转换工作
+    auto map_it = m.find(s);
+    //如果map_it指针不是在末尾;代表存在
+    if (map_it != m.cend())
+        return map_it->second;  //输出关联值;
+    else
+        return s;
+}
+//两文件传入 转换字符串输出
+void word_transform(ifstream &map_file, ifstream &input){
+    map<string,string> trans_map = buildMap(map_file);  //生成转换字典.
+    string text;
+    while (getline(input,text)){    //输入一行一行放入text;
+        istringstream stream(text); //然后把text当作流;
+        string word;
+        bool firstword = true;
+        while (stream >> word){ //text 传给word;
+            if (firstword)  //真不打印空格
+                firstword = false;
+            else
+                cout << " ";
+                //transform用word匹配字典转换输出;
+            cout << transform(word, trans_map);
+
+        }
+        cout << endl;
+    }
+}
+map<string,string> shengchengzidian (ifstream &s){
+    map<string,string> m;
+    string key, value;
+    while(s>>key && getline(s,value)){
+        if (value.size() >1)
+            m[key] = value.substr(1);
+        else
+            throw runtime_error("错误了!");
+    }
+}
+string zhuanhuan (string &s, map<string,string> &m){
+    auto iter = m.find(s);
+    if (iter != m.end())
+        return iter->second;
+    else
+        return s;
+}
+void string_string (ifstream &s, ifstream &input){
+    map<string,string> m = shengchengzidian(s);
+    string text;
+    while (getline(input, text)){
+        istringstream stream(text);
+        string word;
+        while (stream >> word){
+            cout << zhuanhuan(word, m);
+        }
+    }
+}
+
 
 int main()
 {
+    int i=0;
+    cout << i ;
+}
+/*
     vector<int> vec = {0,1,2,3,4,5,6,7,8,9,10,11,12,13};
     cout << vec[method(vec,4)] << endl;
     //method()
 
 
-}
+
 
 /*
     multimap<string,string > mapa;
@@ -75,7 +153,59 @@ int main()
 
 
 
+
 /*
+//11.38
+    懒
+
+//11.37
+    访问时间更加均匀化;
+    这在无序的查询中更好, 延迟在1~999ms的访问随机范围中.没人喜欢碰到999ms
+    在顺序容器重复访问末尾关键字就存在这种问题.
+
+//11.36
+    某一行就一个char 会导致程序抛出错误;
+
+//11.35
+    一样的效果
+
+
+//11.34
+    能写但有隐患.
+    如果不存在关联容器中则 添加新关键字 值为空的值;
+    可以用关联值是否为空判定但这样关联容器关键字会越来越多;导致臃肿.
+
+
+//11.33
+map<string,string> shengchengzidian (ifstream &s){
+    map<string,string> m;
+    string key, value;
+    while(s>>key && getline(s,value)){
+        if (value.size() >1)
+            m[key] = value.substr(1);
+        else
+            throw runtime_error("错误了!");
+    }
+}
+string zhuanhuan (string &s, map<string,string> &m){
+    auto iter = m.find(s);
+    if (iter != m.end())
+        return iter->second;
+    else
+        return s;
+}
+void string_string (ifstream &s, ifstream &input){
+    map<string,string> m = shengchengzidian(s);
+    string text;
+    while (getline(input, text)){
+        istringstream stream(text);
+        string word;
+        while (stream >> word){
+            cout << zhuanhuan(word, m);
+        }
+    }
+}
+
 //11.32
     multimap<string,string > mapa;
     ifstream in("data.txt");
