@@ -22,13 +22,128 @@
 #include <utility>          //使用pair一对变量类型
 #include <ctime>            //c的程序计时软件
 #include <memory>           //智能指针
+#include "Sales_data.h"
+
 using namespace std;
 
+template <typename T,typename T2>
+int compare(const T&v1, const T2&v2){
+    auto i = find(v1.begin(),v1.end(),v2);
+    return *i;
+}
+
+template <typename T,size_t T2>
+void print(array<T, T2> &arr){
+    for (auto value: arr)
+        cout << value << endl;
+}
+template <typename T,size_t T2>
+T* begin(array<T, T2> &arr){
+    T* i =&arr[0];
+    return i;
+}
+template <typename T,size_t T2>
+T* end(array<T, T2> &arr){
+    T* i =&arr[T2-1];
+    i++;
+    return i;
+}
+
+template <typename T,size_t N>
+constexpr size_t co(array<T, N> &arr){
+    return N;
+}
+int main(){
+    //vector<int> vec = {1,2,3};
+    //cout << compare(vec,3);
+    array<string, 5> a = {"a","b","c","d","e"};
+    //print(a);
+    cout << co(a);
+
+}
+/*
+//16.8
+因为c++ 有迭代器这玩意 能作用于几乎全部的容器类型. 迭代器的运算方式有 == 和 !=
+而 <= < > >= 这些运算可能并没有实现. 所以必须换用< > ;
+
+
+//16.7
+template <typename T,size_t N>
+constexpr size_t co(array<T, N> &arr){
+    return N;
+}
+int main(){
+    array<string, 5> a = {"a","b","c","d","e"};
+    cout << co(a);
+}
+
+//16.6
+template <typename T,size_t T2>
+T* begin(array<T, T2> &arr){
+    T* i =&arr[0];
+    return i;
+}
+template <typename T,size_t T2>
+T* end(array<T, T2> &arr){
+    T* i =&arr[T2-1];
+    i++;
+    return i;
+}
+//end 这个应该是创建一个动态内存拼接在数组的尾部. 不是我这个函数的写法.
+//而且我这个++ -- +n -n运算都没实现.
+
+
+//16.5
+template <typename T,size_t T2>
+void print(array<T, T2> &arr){
+    for (auto value: arr)
+        cout << value << endl;
+}
+
+int main(){
+    array<string, 5> a = {"a","b","c","d","e"};
+    print(a);
+}
+
+//16.4
+template <typename T,typename T2>
+int compare(const T&v1, const T2&v2){
+    auto i = find(v1.begin(),v1.end(),v2);
+    return *i;
+}
+int main(){
+    vector<int> vec = {1,2,3};
+    cout << compare(vec,3);
+
+}
+
+
+//16.3
+template <typename T>
+T co(const T&v1, const T&v2){
+    add(v1,v2);
+    return add(v1,v2);
+}
+int main(){
+    Sales_data a(10), b(20);
+    a = co(a,b);
+    print(a);
+}
+
+
+//16.2
 template <typename T>
 int co(const T&v1, const T&v2){
     return v1+v2;
-}
 int main()
 {
    cout << co(1,2);
 }
+
+
+
+//16.1
+实例化的定义:根据传入参数在模板里的运算 对自定义类型进行auto类似的辨别 编写一个特定版本的函数.来调用这实例;
+
+
+*/
