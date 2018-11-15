@@ -56,6 +56,10 @@ int main()
     auto e = &ci;
     auto &g = ci;
 
+    //2.32
+     不合法
+     int null = 0, *p = &null;
+
     //2.31
     int i = 0;              //i变量 v2常量 v1变量
     const int v2 = 0;       //p1指针指向变量  p2指针指向常量 p3定值指针指向定值i=3

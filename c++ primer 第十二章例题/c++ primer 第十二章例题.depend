@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1542037982 source:f:\data\github\work\c++ primer 第十六章例题\main.cpp
+1542101695 source:f:\data\github\work\c++ primer 第十二章例题\main.cpp
 	<iostream>
 	<string>
 	<cctype>
@@ -24,9 +24,4 @@
 	<utility>
 	<ctime>
 	<memory>
-	"Sales_data.h"
-
-1542034690 f:\data\github\work\c++ primer 第十六章例题\sales_data.h
-	<iostream>
-	<string>
 

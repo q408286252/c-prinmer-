@@ -75,14 +75,113 @@ private:
             throw out_of_range(s);
     }
 };
+
+shared_ptr< vector<int> > fun(){
+    shared_ptr< vector<int> > p = make_shared< vector<int>>();
+    return p;
+}
+shared_ptr< vector<int> >  fun2(initializer_list<int> &la){
+    shared_ptr< vector<int> > p = fun();
+    for(auto iter = la.begin(); iter != la.end(); ++iter)
+        p->push_back(*iter);
+    return p;
+}
+void fun3(shared_ptr< vector<int> > p){
+    for(auto iter = p->begin(); iter != p->end(); ++iter)
+        cout << *iter;
+}
+
+void pro(shared_ptr<int> p){
+    cout << *p;
+}
+
 int main()
 {
-    vector<string> aa = {"a","b"};
-    StrBlob a(aa);
-
+    shared_ptr<int> p(new int(9));
+    pro(shared_ptr<int>(p.get()));
 }
 /*
+
+//12.11
+
+
+
+
+//12.10
+    不正确; 因为传参不是传p智能指针 而是传了一个p同分配内存的智能指针拷贝;
+    把参数shared_ptr<int>(p) 改为p就行.
+
+
+//12.9
+    int *q= new int(42), *r = new int(100);
+    r = q;  // new int(100) 占用内存永远无法delete
+    auto q2 = make_shared<int>(42), r2 = make_shared<int>(100);
+    r2 = q2;  //make_shared<int>(100) 占用内存自动删除;
+
+
+//12.8
+bool b(){
+    int *p = new int;
+    //...
+    return p;
+}
+=. = bool 改为 int*才对啊;
+虽然编译器过了 但p指针变为bool 调用的动态内存怎么删?
+
+
+//12.7
+shared_ptr< vector<int> > fun(){
+    shared_ptr< vector<int> > p = make_shared< vector<int>>();
+    return p;
+}
+shared_ptr< vector<int> >  fun2(initializer_list<int> &la){
+    shared_ptr< vector<int> > p = fun();
+    for(auto iter = la.begin(); iter != la.end(); ++iter)
+        p->push_back(*iter);
+    return p;
+}
+void fun3(shared_ptr< vector<int> > p){
+    for(auto iter = p->begin(); iter != p->end(); ++iter)
+        cout << *iter;
+}
+int main()
+{
+    initializer_list<int> la = {1,2,3};
+    fun3( fun2(la) );
+}
+
+
+//12.6
+vector<int>* fun(){
+    return new vector<int>{};
+}
+vector<int> * fun2(initializer_list<int> &la){
+    vector<int> *ptrvec = fun();
+    for(auto iter = la.begin(); iter != la.end(); ++iter)
+        ptrvec->push_back(*iter);
+    return ptrvec;
+}
+void fun3(vector<int> *ptrvec){
+    for(auto iter = ptrvec->begin(); iter != ptrvec->end(); ++iter)
+        cout << *iter;
+    delete ptrvec;
+}
+int main()
+{
+    initializer_list<int> la = {1,2,3};
+    fun3( fun2(la) );
+}
+
+
+//12.5
+    优点 能使类支更多类型的传入
+    explicit 没写的缺点是: 不够谨慎,如果函数需要实例时候没传实例会可能会把传入的参数实例化,可能与原函数思想不一致埋下隐患;
+
+//12.4
+    为什么要检查i是否 大于0?  要检查也是检查是否大于等于0,抛错误主要还是看是否为空啊.
+
 //12.3
+    不需要.push_back和pop_back 经行了数据操作添加 删除了末尾值,这违反了cont 函数体的要求不改变变量
 
 
 //12.2
