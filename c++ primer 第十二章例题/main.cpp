@@ -95,17 +95,85 @@ void pro(shared_ptr<int> p){
     cout << *p;
 }
 
+struct destination{
+    destination(string ss):s(ss){}
+    string s;
+};
+void end_destination(destination *c){
+    delete c;
+}
+
+unique_ptr<int> f(int p){
+    return unique_ptr<int>(new int(p));
+}
+
+
 int main()
 {
-    shared_ptr<int> p(new int(9));
-    pro(shared_ptr<int>(p.get()));
+    int *p = new int(10);
+    shared_ptr<int> s_p(p);
+    weak_ptr<int> w_p(s_p);
+
 }
 /*
+//12.18
+    使用relese无非就是拷贝引用指针; 而shared_ptr直接用就行了. 为啥写这个relese?
+
+//12.17
+    //IntP p0(ix);    //错误ix是常驻内存
+    IntP p2(pi2);
+    IntP p4(new int(2048));
+    //IntP p1(pi);    //指向了常用内存地址编译器没发现错误隐患非常大.
+    //IntP p3(&ix);   //指向了常用内存地址编译器没发现错误隐患非常大.
+    //IntP p5(p2.get());  //一个地址两个用完会调用删除的unique还行;
+
+
+//12.16
+    拷贝和赋值错误可以理解无法直接转换
+    error: conversion from 'int*' to non-scalar type 'std::unique_ptr<int>' requested|
+
+
+
+//12.15
+int main()
+{
+    destination c("aaaaaa");
+    shared_ptr<destination> p(&c,
+                              [](destination *c){delete c;} );
+}
+
+//12.14
+struct destination{
+    destination(string ss):s(ss){}
+    string s;
+};
+
+void end_destination(destination *c){
+    delete c;
+}
+
+
+int main()
+{
+    destination c("aaaaaa");
+    shared_ptr<destination> p(&c,end_destination);
+}
+
+//12.13
+    auto sp = make_shared<int>();   //sp为智能指针
+    auto p = sp.get();  //so管理的内存分配给p指针
+    delete p;   //p的内存删除 导致sp管理的内存删除;
+
+//12.12
+    auto p = new int();
+    auto sp = make_shared<int>();
+    pro(sp);
+    pro(new int()); //不合法.因为 会造成内存泄漏;
+    pro(p); //p传参不能转换成shared_ptr<int> 类型
+    pro(shared_ptr<int>(p));//不合法.因为sp作用范围中的内存已经被删除
 
 //12.11
-
-
-
+    运行完p的指针 所指的内存被释放;
 
 //12.10
     不正确; 因为传参不是传p智能指针 而是传了一个p同分配内存的智能指针拷贝;
