@@ -128,21 +128,48 @@ private:
     }
 };
 std::allocator<string> StrVec::alloc;
+
 int main(){
-    StrVec li;
-    StrVec l2({"a","b","c"});
-    cout << li.capacity()<< "\n" << l2.capacity() << "\n";
-    li.push_back("aa");
-    cout << li.capacity() << "\n";
-    li.reserve(10);
-    cout << li.capacity() << "\n";
-    li.resize(20,"a");
-    cout << *(li.begin() +11) << li.capacity() << "\n";
-    StrVec l3 = li;
-    cout << l3.capacity() << "\n";
+    //int f();
+    vector<int> vi(100);
+    //int &r1 = f();   //错误
+    //int r1 = f();      //错误
+    //const int &r1 = f();    //错误
+    //int &&r1 = f();   //错误
+    //我有点蒙. 然后发现按编译器吧int f();当一个函数声明了. 蒙蔽. 那就是例题的问题
+    int f(5);
+    int &r1 = f;
+    int &r2 = vi[0];
+    int &r3 = r1;
+    int &&r4 = vi[0] * f;
+    vector<int> vec;
+    make_move_iterator(vec.begin());
 }
 
 /*
+
+
+//13.47  13.48
+    emmmmm
+
+//13.46
+    //int f();
+    vector<int> vi(100);
+    //int &r1 = f();   //错误
+    //int r1 = f();      //错误
+    //const int &r1 = f();    //错误
+    //int &&r1 = f();   //错误
+    //我有点蒙. 然后发现按编译器吧int f();当一个函数声明了. 蒙蔽. 那就是例题的问题
+    int f(5);
+    int &r1 = f;
+    int &r2 = vi[0];
+    int &r3 = r1;
+    int &&r4 = vi[0] * f;
+
+
+//13.45
+右值引用  绑定一个 无用户控制, 唯一, 临时性随时被删除的右值
+左值引用  绑定一个变量起个别名 如果常量加const
 
 
 
