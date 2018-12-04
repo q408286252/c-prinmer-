@@ -129,24 +129,25 @@ private:
 };
 std::allocator<string> StrVec::alloc;
 
+
+void push_back(const int&a){
+    cout << "运行了1";
+}
+void push_back(int&&a){
+    cout << "运行了2";
+}
 int main(){
-    //int f();
-    vector<int> vi(100);
-    //int &r1 = f();   //错误
-    //int r1 = f();      //错误
-    //const int &r1 = f();    //错误
-    //int &&r1 = f();   //错误
-    //我有点蒙. 然后发现按编译器吧int f();当一个函数声明了. 蒙蔽. 那就是例题的问题
-    int f(5);
-    int &r1 = f;
-    int &r2 = vi[0];
-    int &r3 = r1;
-    int &&r4 = vi[0] * f;
-    vector<int> vec;
-    make_move_iterator(vec.begin());
+    push_back(12);
+    int a = 12;
+    push_back(a);
+    push_back(std::move(a));
+    const int b = 12;
+    push_back(b);
 }
 
 /*
+//13.49
+
 
 
 //13.47  13.48
